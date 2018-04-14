@@ -1,7 +1,6 @@
 import RPi.GPIO as GPIO
 import time
 
-
 class AlphaBot2(object):
     def __init__(self, ain1=12, ain2=13, ena=6, bin1=20, bin2=21, enb=26):
         self.AIN1 = ain1
@@ -11,7 +10,7 @@ class AlphaBot2(object):
         self.ENA = ena
         self.ENB = enb
         self.PA = 50
-        self.PB = 50
+        self.PB = 53
 
         GPIO.setmode(GPIO.BCM)
         GPIO.setwarnings(False)
