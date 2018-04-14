@@ -6,27 +6,31 @@ Ab = AlphaBot2()
 
 try:
 	while True:
-        s = input()
 
-		if s = ' ':
+	        s = raw_input()
+
+		if s == ' ':
 			Ab.stop();
 			print("stop")
-		elif s = 'w':
+
+		elif s == 'w':
 			Ab.forward();
 			print("up")
-		elif s = 'd':
+
+		elif s == 'd':
 			Ab.right();
 			print("right")
-			while GPIO.input(B) == 0:
-				time.sleep(0.01)
-		elif s = 'a':
+
+		elif s == 'a':
 			Ab.left();
 			print("left")
 
-		elif s = 's':
+		elif s == 's':
 			Ab.backward();
 			print("down")
-		else:
+		else :
+			print("no key!!")
+			s = ' '
 
 
 except KeyboardInterrupt:
