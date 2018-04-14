@@ -6,7 +6,7 @@ Ab = AlphaBot2()
 
 try:
 	while True:
-        s = input();
+        s = input()
 
 		if s = ' ':
 			Ab.stop();
