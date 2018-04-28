@@ -39,16 +39,22 @@ try:
                 Ab.backward()
 
             elif ch == '8':
-             Ab.speed_up()
-             print("speed up now speed :" ,Ab.PA)
+                if(Ab.PA <= 90):
+                    Ab.speed_up()
+                    print("speed up now speed :" ,Ab.PA)
+                else:
+                    print("speed max");
 
             elif ch == '2':
-             Ab.speed_down()
-             print("speed down now speed :", Ab.PA)
+                if (Ab.PA >= 30):
+                    Ab.speed_down()
+                    print("speed down now speed :", Ab.PA)
+                else:
+                    print("speed min");
 
             elif ch == '5':
                 Ab.setPWMA(50)
-                Ab.setPWMB(53)
+                Ab.setPWMB(50)
                 print("speed init!")
 
             elif ch == 'h':
