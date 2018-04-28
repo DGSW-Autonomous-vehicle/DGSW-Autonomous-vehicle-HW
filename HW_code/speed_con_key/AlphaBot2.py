@@ -68,13 +68,13 @@ class AlphaBot2(object):
 
 
     def speed_up(self):
-        self.PB += 5
+        self.PA += 5
         self.PB += 5
         self.PWMB.ChangeDutyCycle(self.PA)
         self.PWMB.ChangeDutyCycle(self.PB)
 
     def speed_down(self):
-        self.PB -= 5
+        self.PA -= 5
         self.PB -= 5
         self.PWMB.ChangeDutyCycle(self.PA)
         self.PWMB.ChangeDutyCycle(self.PB)
