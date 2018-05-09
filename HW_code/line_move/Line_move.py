@@ -12,5 +12,28 @@ while(1):
     for i in range(0,4):
         if(input[i] < 300):
             f += 2^i
-    print (bin(f))
-    time.sleep(1)
+
+    if(f == 0 || f == 31):
+        print("zero or full")
+        Ab.stop()
+
+    elif(8 > f):
+        if(f % 1 == 0 && f % 2 == 0):
+            print("8 > forword")
+            Ab.motor_init()
+            Ab.forward()
+        else:
+            print("right")
+            Ab.setMotor_UKC(3, -3)
+
+    elif(f < 3):
+        print("left")
+        Ab.setMotor_UKC(-3,3)
+
+    elif(f == 4):
+        print("forword")
+        Ab.motor_init()
+        Ab.forward()
+    else:
+        print("else")
+        Ab.stop()

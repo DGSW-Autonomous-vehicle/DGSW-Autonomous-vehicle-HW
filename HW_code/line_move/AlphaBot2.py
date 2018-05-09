@@ -87,6 +87,18 @@ class AlphaBot2(object):
         self.PB = value
         self.PWMB.ChangeDutyCycle(self.PB)
 
+    def setMotor_UKC(self,left,right):
+        self.PA - left
+        self.PB - right
+
+        self.setPWMA(self.PA)
+        self.setPWMB(self.PB)
+
+    def motor_init(self):
+        self.PA = 50;
+        self.PB = 53;
+
+
     def setMotor(self, left, right):
         if ((right >= 0) and (right <= 100)):
             GPIO.output(self.AIN1, GPIO.HIGH)
