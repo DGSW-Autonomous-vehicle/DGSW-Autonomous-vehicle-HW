@@ -9,8 +9,8 @@ class AlphaBot2(object):
         self.BIN2 = bin2
         self.ENA = ena
         self.ENB = enb
-        self.PA = 40
-        self.PB = 40
+        self.PA = 30
+        self.PB = 30
 
         GPIO.setmode(GPIO.BCM)
         GPIO.setwarnings(False)
@@ -81,16 +81,19 @@ class AlphaBot2(object):
 
     def setMotor_UKC(self,left,right):
 	if(self.PA <= 10 or self.PB <= 10):
+	    print("W: speed data min ")
 	    return
-        self.PA =+ left
-        self.PB =+ right
-        self.PWMB.ChangeDutyCycle(self.PA)
+
+        self.PA = self.PA + left
+        self.PB = self.PB + right
+
+        self.PWMA.ChangeDutyCycle(self.PA)
         self.PWMB.ChangeDutyCycle(self.PB)
 
 
     def motor_init(self):
-        self.PA = 40;
-        self.PB = 40;
+        self.PA = 30;
+        self.PB = 30;
 
 
     def setMotor(self, left, right):

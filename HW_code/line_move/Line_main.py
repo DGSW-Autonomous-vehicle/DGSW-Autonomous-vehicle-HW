@@ -15,18 +15,20 @@ while(1):
 
     if(f == 0 or f == 31):
         print("zero or full")
+	Ab.motor_init()
         Ab.stop()
     elif(f == 4):
 	print("forward")
+	Ab.motor_init()
 	Ab.forward()
-    elif(f > 4 ):
+    elif(f == 24 or f == 16 or f == 8):
 	print("left")
-	Ab.setMoter_UKC(-5,5)
+	Ab.setMotor_UKC(2,-3)
 	Ab.forward()
 
-    elif(f < 4):
+    elif(f == 3 or f == 2 or f == 1):
 	print("right")
-	Ab.setMoter_UKC(5,-5)
+	Ab.setMotor_UKC(-3,2)
 	Ab.forward()
 
     else:
