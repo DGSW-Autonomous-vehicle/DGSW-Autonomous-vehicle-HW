@@ -82,10 +82,14 @@ class AlphaBot2(object):
     def setMotor_UKC(self,left,right):
 	if(self.PA <= 10 or self.PB <= 10):
 	    print("W: speed data min ")
+	    print(self.PA)
+	    print(self.PB) 
+	    self.PA = 10
+	    self.PB = 10
 	    return
 
-        self.PA = self.PA + left
-        self.PB = self.PB + right
+        self.PA += left
+        self.PB += right
 
         self.PWMA.ChangeDutyCycle(self.PA)
         self.PWMB.ChangeDutyCycle(self.PB)
