@@ -10,7 +10,7 @@ m = 0
 cut = 0
 move_time = [0.3,0.5,0.6,0.8,1]
 
-while(1):
+while(true):
     f = 0
     input = TR.AnalogRead()
     for i in range(0,4):
@@ -18,25 +18,25 @@ while(1):
             f += pow(2,i)
 
     if(f == 0 or f == 31):
-	    print("zero or full")
-	    if(m > 0):
-	        if(cut == 1):
-	            Ab.right(20)
-		    cut = 0
-  	        elif(cut == 0):
-		    Ab.left(20)
-		    cut = 1
-		time.sleep(move_time[(10-m)/2])
-		m -= 1
-		Ab.stop()
-		time.sleep(0.4)
-	    else:
-	        Ab.stop()
+        print("zero or full")
+        if(m > 0):
+            if(cut == 1):
+                Ab.right(20)
+                cut = 0
+            elif(cut == 0):
+            Ab.left(20)
+            cut = 1
+        time.sleep(move_time[(10-m)/2])
+        m -= 1
+        Ab.stop()
+        time.sleep(0.4)
+        else:
+            Ab.stop()
     elif(f % 4 == 0):
         print("include 4")
         Ab.motor_init()
         Ab.forward()
-	m = 10;
+    m = 10
     else:
         print("no 4")
         if (f % 16 == 0 or f % 8 == 0):
