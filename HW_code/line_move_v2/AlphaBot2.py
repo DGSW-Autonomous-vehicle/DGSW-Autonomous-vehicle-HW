@@ -107,10 +107,6 @@ class AlphaBot2(object):
         self.PA += left
         self.PB += right
 
-        self.PWMA.ChangeDutyCycle(self.PA)
-        self.PWMB.ChangeDutyCycle(self.PB)
-
-
     def motor_init(self):
         self.PA = 30;
         self.PB = 30;
