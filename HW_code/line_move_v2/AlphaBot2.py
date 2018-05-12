@@ -66,6 +66,22 @@ class AlphaBot2(object):
         GPIO.output(self.BIN1, GPIO.HIGH)
         GPIO.output(self.BIN2, GPIO.LOW)
 
+    def left(self,data):
+        self.PWMA.ChangeDutyCycle(data)
+        self.PWMB.ChangeDutyCycle(data)
+        GPIO.output(self.AIN1, GPIO.HIGH)
+        GPIO.output(self.AIN2, GPIO.LOW)
+        GPIO.output(self.BIN1, GPIO.LOW)
+        GPIO.output(self.BIN2, GPIO.HIGH)
+
+    def right(self,data):
+        self.PWMA.ChangeDutyCycle(data)
+        self.PWMB.ChangeDutyCycle(data)
+        GPIO.output(self.AIN1, GPIO.LOW)
+        GPIO.output(self.AIN2, GPIO.HIGH)
+        GPIO.output(self.BIN1, GPIO.HIGH)
+        GPIO.output(self.BIN2, GPIO.LOW)
+
 
     def speed_up(self):
         self.PA += 5

@@ -17,24 +17,24 @@ while(1):
             f += pow(2,i)
 
     if(f == 0 or f == 31):
-	print("zero or full")
-	if(m > 0):
-	    if(cut == 1):
-	        Ab.right()
-		time.sleep(0.1)
-		cut = 0
-  	    elif(cut == 0):
-		Ab.left()
-	        time.sleep(0.1)
-		cut = 1
-	    Ab.stop()
+	    print("zero or full")
+	    if(m > 0):
+	        if(cut == 1):
+	            Ab.right(10+m*4)
+		        time.sleep(0.1)
+		        cut = 0
+  	        elif(cut == 0):
+		        Ab.left(10+m*4)
+	            time.sleep(0.1)
+		        cut = 1
+	        Ab.stop()
 	    m -= 1
 	Ab.stop()
     elif(f % 4 == 0):
         print("include 4")
         Ab.motor_init()
         Ab.forward()
-	m = 7;
+	    m = 7;
     else:
         print("no 4")
         if (f % 16 == 0 or f % 8 == 0):
