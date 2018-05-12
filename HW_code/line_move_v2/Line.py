@@ -21,7 +21,7 @@ while(1):
 	if(m > 0):
 	    if(cut == 1):
 	        Ab.right()
-		time.sleep(0.2)
+		time.sleep(0.1)
 		cut = 0
   	    elif(cut == 0):
 		Ab.left()
