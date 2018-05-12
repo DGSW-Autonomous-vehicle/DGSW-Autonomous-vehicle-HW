@@ -8,7 +8,7 @@ Ab = AlphaBot2()
 
 m = 0
 cut = 0
-move_time = [0.5,0.7,0.8,0.1,1.3]
+move_time = [0.3,0.5,0.6,0.8,1]
 
 while(1):
     f = 0
@@ -31,7 +31,7 @@ while(1):
 		Ab.stop()
 		time.sleep(0.4)
 	    else:
-		Ab.stop()
+	        Ab.stop()
     elif(f % 4 == 0):
         print("include 4")
         Ab.motor_init()
@@ -41,19 +41,13 @@ while(1):
         print("no 4")
         if (f % 16 == 0 or f % 8 == 0):
             print ("left")
-            #Ab.setMotor_UKC(2,-1)
-            #Ab.forward()
-	    Ab.left(20)
+            Ab.setMotor_UKC(2,-1)
+            Ab.forward()
 
         elif (f % 2 == 0 or f % 1 == 0):
             print("right")
-            #Ab.setMotor_UKC(-1,2)
+            Ab.setMotor_UKC(-1,2)
             Ab.forward()
-	    #Ab.right(20)
-
-        else:
-            print("Error")
-            Ab.stop()
 
         Ab.stop()
 
