@@ -18,13 +18,12 @@ try:
 		DL_status = GPIO.input(DL)
 		print(DR_status,DL_status)
 		if((DL_status == 0) or (DR_status == 0)):
-			#Ab.back()
-			#time.sleep(0.5)
-			#Ab.stop()
+			Ab.back()
+			time.sleep(0.3)
 
-			Ab.left()
-			#Ab.right()
-			time.sleep(0.002)
+			Ab.left(20)
+			#Ab.right(20)
+			time.sleep(0.2)
 			Ab.stop()
 		#	print("object")
 		else:
