@@ -27,6 +27,7 @@ class AlphaBot2(object):
         self.stop()
 
     def forward(self):
+	print("forward")
         self.PWMA.ChangeDutyCycle(self.PA)
         self.PWMB.ChangeDutyCycle(self.PB)
         GPIO.output(self.AIN1, GPIO.LOW)
@@ -50,17 +51,17 @@ class AlphaBot2(object):
         GPIO.output(self.BIN1, GPIO.HIGH)
         GPIO.output(self.BIN2, GPIO.LOW)
 
-    def left(self):
-        self.PWMA.ChangeDutyCycle(20)
-        self.PWMB.ChangeDutyCycle(20)
+    def left(self,data):
+        self.PWMA.ChangeDutyCycle(data)
+        self.PWMB.ChangeDutyCycle(data)
         GPIO.output(self.AIN1, GPIO.HIGH)
         GPIO.output(self.AIN2, GPIO.LOW)
         GPIO.output(self.BIN1, GPIO.LOW)
         GPIO.output(self.BIN2, GPIO.HIGH)
 
-    def right(self):
-        self.PWMA.ChangeDutyCycle(20)
-        self.PWMB.ChangeDutyCycle(20)
+    def right(self,data):
+        self.PWMA.ChangeDutyCycle(data)
+        self.PWMB.ChangeDutyCycle(data)
         GPIO.output(self.AIN1, GPIO.LOW)
         GPIO.output(self.AIN2, GPIO.HIGH)
         GPIO.output(self.BIN1, GPIO.HIGH)
@@ -80,20 +81,20 @@ class AlphaBot2(object):
         self.PWMB.ChangeDutyCycle(self.PB)
 
     def setMotor_UKC(self,left,right):
-	if(self.PA <= 10 or self.PB <= 10):
-	    print("W: speed data min ")
-	    return
+        if(self.PA <= 10 or self.PB <= 10):
+            print("W: speed data min ")
+            print(self.PA)
+            print(self.PB)
+            return
 
-        self.PA = self.PA + left
-        self.PB = self.PB + right
-
-        self.PWMA.ChangeDutyCycle(self.PA)
-        self.PWMB.ChangeDutyCycle(self.PB)
-
+        self.PA += left
+        self.PB += right
+	print(self.PA)
+	print(self.PB)
 
     def motor_init(self):
-        self.PA = 30;
-        self.PB = 30;
+        self.PA = 30
+        self.PB = 30
 
 
     def setMotor(self, left, right):
