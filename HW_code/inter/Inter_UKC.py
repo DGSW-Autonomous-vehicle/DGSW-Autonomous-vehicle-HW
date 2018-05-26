@@ -19,13 +19,13 @@ try:
 	if(DL == 1 and DR == 1):
 		Ab.forward()
 		#print("forward")
-	elif(DL == 0 and DR == 1)
+	elif(DL == 0 and DR == 1):
 		Ab.right(20)
 		time.sleep(0.3)
-	elif(DL == 1 and DR == 0)
+	elif(DL == 1 and DR == 0):
 		Ab.left(20)
 		time.sleep(0.3)
-	else
+	else:
 		Ab.stop()
 
 except KeyboardInterruqt:
