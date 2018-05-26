@@ -1,15 +1,21 @@
 import cv2
 import numpy as np
+import threading
 #import pytesseract as pt
 
-class Camera_Line():
+class Camera_Line(threading.Thread):
     flag = -1
     #-1 = not detected
     #0 = go throught
     #1 = go right
     #2 = go left
+    def __init__(self, url):
+        threading.Thread.__init__(self)
+        self.flag = -1
+
     def run(self):
         self.main()
+        print("Thread")
 
     def radianToDegree(self,angle):
         return theta / np.pi * 180

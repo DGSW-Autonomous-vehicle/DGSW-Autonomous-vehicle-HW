@@ -6,11 +6,17 @@ from AlphaBot2 import AlphaBot2
 from Camera_Line import Camera_Line
 
 Ab = AlphaBot2()
+
+"""
 CL = Camera_Line()
 
 t_CL = threading.Thread(target=CL.main())
 t_CL.daemon = True
 t_CL.start()
+"""
+
+CL = Camera_Line()
+CL.start()
 
 while(ture):
 
