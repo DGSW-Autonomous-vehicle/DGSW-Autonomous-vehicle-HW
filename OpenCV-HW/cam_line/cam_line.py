@@ -9,6 +9,7 @@ Ab = AlphaBot2()
 CL = Camera_Line()
 
 t_CL = threading.Thread(target=CL.main())
+t_CL.daemon = True
 t_CL.start()
 
 while(ture):
