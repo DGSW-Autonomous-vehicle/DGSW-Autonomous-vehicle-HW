@@ -10,12 +10,13 @@ class Camera_Line(threading.Thread):
     #1 = go right
     #2 = go left
     def __init__(self, url):
-        threading.Thread.__init__(self)
         self.flag = -1
+        threading.Thread.__init__(self)
+
 
     def run(self):
-        self.main()
         print("Thread")
+        self.main()
 
     def radianToDegree(self,angle):
         return theta / np.pi * 180
