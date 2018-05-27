@@ -9,7 +9,7 @@ class Camera_Line(threading.Thread):
     #0 = go throught
     #1 = go right
     #2 = go left
-    def __init__(self, url):
+    def __init__(self):
         self.flag = -1
         threading.Thread.__init__(self)
 

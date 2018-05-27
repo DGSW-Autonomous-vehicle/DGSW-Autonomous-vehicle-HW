@@ -12,7 +12,7 @@ CL.daemon = True
 CL.start()
 
 try:
-    while(ture):
+    while(1):
 
         flag_CL = CL.flag
 
