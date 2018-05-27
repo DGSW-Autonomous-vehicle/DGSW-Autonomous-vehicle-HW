@@ -5,6 +5,7 @@
 
 * https://github.com/fbqweasd/DGSW-Autonomous-vehicle __통합 코드 깃 허브__
 * https://github.com/fbqweasd/DGSW-Autonomous-vehicle-OpenCV __OpenCV 깃 허브__
+* https://github.com/DGSW-Autonomous-vehicle/DGSW-Autonomous-vehicle-OpenCV __Server git hub__
 
 ## HW-코드 폴더
 __HW_code__ : 하드웨어 코드의 소스파일이 들어있는 폴더 입니다. 차치차랑의 모델인 alphaBot2의 예제 코드 및 그 코드를 수정한 코드의 소스가 있습니다.
