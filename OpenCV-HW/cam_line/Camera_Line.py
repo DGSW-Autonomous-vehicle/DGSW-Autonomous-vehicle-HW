@@ -7,8 +7,6 @@ class Camera_Line(threading.Thread):
     flag = -1
     #-1 = not detected
     #0 = go throught
-    #1 = go right
-    #2 = go left
     def __init__(self):
         self.flag = -1
         threading.Thread.__init__(self)
@@ -116,14 +114,15 @@ class Camera_Line(threading.Thread):
                             pass
                         else:
                             #print(X+self.roiPy1,Y+self.roiPx1)
-                            #img = cv2.circle(img,(int(X+self.roiPy1),int(Y+self.roiPx1)),5,(255,255,255),-1)
+                            if(mode == 1)
+                                img = cv2.circle(img,(int(X+self.roiPy1),int(Y+self.roiPx1)),5,(255,255,255),-1)
                             PointX.append(X)
                             PointY.append(Y)
         return PointX,PointY
 
     ########################################## put crossed point in lines
             
-    def AvgPoint(self,PointX,PointY,img):
+    def AvgPoint(self,PointX,PointY,img,mode = 1):
         Xsum = 0
         Ysum = 0
         X=0
@@ -140,12 +139,14 @@ class Camera_Line(threading.Thread):
             return -1,-1
         else:
             Y=int(Ysum/len(PointY))
-        #img = cv2.circle(img,(X,Y),5,(255,0,255),-1)
+        if(mode==1):
+            img = cv2.circle(img,(X,Y),5,(255,0,255),-1)
         
         return X,Y
     ################################averange crossed point
  
     def set_flag(self,x,y):
+        print(x,y)
         if(x==-1 or y == -1):
             return -1
         elif(x>=280 and x<=360):
@@ -197,17 +198,17 @@ class Camera_Line(threading.Thread):
             img_Cam = cv2.flip(img_Cam, 1)
             #####flip the cam
 
-            lines = self.getLines(img_Cam, 200, 300, 1)
+            lines = self.getLines(img_Cam, 200, 300, 0)
             if lines is not None:
                 pointX, pointY = self.getCrossPoint(img_Cam,lines,1)
                 if pointX is not None and pointY is not None:
-                    CrossedX,CrossedY = self.AvgPoint(pointX,pointY,img_Cam)
+                    CrossedX,CrossedY = self.AvgPoint(pointX,pointY,img_Cam,1)
                     
             #self.DrawSizeline(img_Cam)
             #cv2.rectangle(img_Cam,(self.roiPy1,self.roiPx1),(self.roiPy2,self.roiPx2),(255,255,0),2)    #draw roi
-            #cv2.imshow("LineEditedPicture", img_Cam)
+            cv2.imshow("LineEditedPicture", img_Cam)
             self.flag = self.set_flag(CrossedX,CrossedY)
-            print(self.flag)
+            #print(self.flag)
             if cv2.waitKey(10) == 27:
                 break  # esc to quit
             
