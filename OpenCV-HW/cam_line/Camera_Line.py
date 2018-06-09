@@ -1,6 +1,5 @@
 import cv2
 import numpy as np
-import threading
 #import pytesseract as pt
 
 class Camera_Line(threading.Thread):
@@ -17,13 +16,18 @@ class Camera_Line(threading.Thread):
     def run(self):
         print("Thread")
         self.main()
-
+    
+    roiPx1 = 280
+    roiPx2 = 480
+    roiPy1 = 1
+    roiPy2 = 639
+    
     def radianToDegree(self,angle):
         return theta / np.pi * 180
     #########################radian to degree
 
     def getLines(self,src, lowthreshold=50, highthreshold=300, mode=1):
-        src = src[280:480, 100:540] 
+        src = src[self.roiPx1:self.roiPx2, self.roiPy1:self.roiPy2] 
         #src = src[]
         Edges = cv2.Canny(src, lowthreshold, highthreshold, None, 3)
         #cv2.imshow("CannyEditedPicture", Edges)
@@ -105,13 +109,13 @@ class Camera_Line(threading.Thread):
                         if((thetap1-theta2) < 0.2 and (thetap1-theta2) > -0.2):
                             continue
                         
-                        bool,X,Y = self.IntersectPoint(x1p1+100,x2p1+100,x3+100,x4+100,y1p1+280,y2p1+280,y3+280,y4+280)
+                        bool,X,Y = self.IntersectPoint(x1p1+self.roiPy1,x2p1+self.roiPy1,x3+self.roiPy1,x4+self.roiPy1,y1p1+self.roiPx1,y2p1+self.roiPx1,y3+self.roiPx1,y4+self.roiPx1)
                         
                         if(bool < 0 or Y>320 or X<150 or X>490 ):
                             pass
                         else:
-                            #print(X+100,Y+280)
-                            #img = cv2.circle(img,(int(X+100),int(Y+280)),5,(255,255,255),-1)
+                            #print(X+self.roiPy1,Y+self.roiPx1)
+                            #img = cv2.circle(img,(int(X+self.roiPy1),int(Y+self.roiPx1)),5,(255,255,255),-1)
                             PointX.append(X)
                             PointY.append(Y)
         return PointX,PointY
@@ -135,7 +139,7 @@ class Camera_Line(threading.Thread):
             return -1,-1
         else:
             Y=int(Ysum/len(PointY))
-        img = cv2.circle(img,(X,Y),5,(255,0,255),-1)
+        #img = cv2.circle(img,(X,Y),5,(255,0,255),-1)
         
         return X,Y
     ################################averange crossed point
@@ -143,12 +147,12 @@ class Camera_Line(threading.Thread):
     def set_flag(self,x,y):
         if(x==-1 or y == -1):
             return -1
-        elif(x>=300 and x<=340):
+        elif(x>=280 and x<=360):
             return 0
-        elif(x>300):
-            return 2
-        elif(x<340):
+        elif(x<280):
             return 1
+        elif(x>340):
+            return 2
         else:
             return -1
             
@@ -192,16 +196,17 @@ class Camera_Line(threading.Thread):
             img_Cam = cv2.flip(img_Cam, 1)
             #####flip the cam
 
-            lines = self.getLines(img_Cam, 200, 300, 0)
+            lines = self.getLines(img_Cam, 200, 300, 1)
             if lines is not None:
                 pointX, pointY = self.getCrossPoint(img_Cam,lines,1)
                 if pointX is not None and pointY is not None:
                     CrossedX,CrossedY = self.AvgPoint(pointX,pointY,img_Cam)
                     
             #self.DrawSizeline(img_Cam)
+            #cv2.rectangle(img_Cam,(self.roiPy1,self.roiPx1),(self.roiPy2,self.roiPx2),(255,255,0),2)    #draw roi
             #cv2.imshow("LineEditedPicture", img_Cam)
             self.flag = self.set_flag(CrossedX,CrossedY)
-            #print(self.flag)
+            print(self.flag)
             if cv2.waitKey(10) == 27:
                 break  # esc to quit
             
