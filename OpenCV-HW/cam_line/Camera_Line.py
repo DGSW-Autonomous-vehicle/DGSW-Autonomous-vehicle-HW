@@ -80,7 +80,7 @@ class Camera_Line(threading.Thread):
         return 1,x,y
     ##########################################get Cross point in fnc
 
-    def getCrossPoint(self,img,lines,mode = 1) :
+    def getCrossPoint(self,img,lines,mode = 0) :
         PointX = []
         PointY = []
         pointindex = 0
@@ -114,7 +114,7 @@ class Camera_Line(threading.Thread):
                             pass
                         else:
                             #print(X+self.roiPy1,Y+self.roiPx1)
-                            if(mode == 1)
+                            if(mode == 1):
                                 img = cv2.circle(img,(int(X+self.roiPy1),int(Y+self.roiPx1)),5,(255,255,255),-1)
                             PointX.append(X)
                             PointY.append(Y)
@@ -198,9 +198,9 @@ class Camera_Line(threading.Thread):
             img_Cam = cv2.flip(img_Cam, 1)
             #####flip the cam
 
-            lines = self.getLines(img_Cam, 200, 300, 0)
+            lines = self.getLines(img_Cam, 200, 300, 1)
             if lines is not None:
-                pointX, pointY = self.getCrossPoint(img_Cam,lines,1)
+                pointX, pointY = self.getCrossPoint(img_Cam,lines,0)
                 if pointX is not None and pointY is not None:
                     CrossedX,CrossedY = self.AvgPoint(pointX,pointY,img_Cam,1)
                     
