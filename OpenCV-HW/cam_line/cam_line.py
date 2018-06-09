@@ -25,12 +25,12 @@ try:
             Ab.forward()
             print("forward")
 
-        elif(flag_CL == 1):
+        elif(flag_CL == 2):
             print("right")
             Ab.setMotor_UKC(-1, 0)
             Ab.forward()
 
-        elif (flag_CL == 2):
+        elif (flag_CL == 1):
             print ("left")
             Ab.setMotor_UKC(0, -1)
             Ab.forward()
