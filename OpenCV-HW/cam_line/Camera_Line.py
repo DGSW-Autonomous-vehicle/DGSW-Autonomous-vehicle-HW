@@ -1,5 +1,6 @@
 import cv2
 import numpy as np
+import threading
 #import pytesseract as pt
 
 class Camera_Line(threading.Thread):

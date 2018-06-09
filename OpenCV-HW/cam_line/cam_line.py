@@ -27,12 +27,12 @@ try:
 
         elif(flag_CL == 1):
             print("right")
-            Ab.setMotor_UKC(-1, 1)
+            Ab.setMotor_UKC(-1, 0)
             Ab.forward()
 
         elif (flag_CL == 2):
             print ("left")
-            Ab.setMotor_UKC(1, -1)
+            Ab.setMotor_UKC(0, -1)
             Ab.forward()
 
         else:
