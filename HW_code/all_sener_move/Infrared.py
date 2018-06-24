@@ -45,4 +45,10 @@ class Infrared(threading.Thread):
 					self.flag = 2
 				else:
 					self.flag = -1
+					print ("DL =")
+					print (self.DL)
+					print ("DR =")
+					print (self.DR)
+					print()
+					
 				time.sleep(100)
