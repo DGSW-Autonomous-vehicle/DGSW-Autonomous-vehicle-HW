@@ -26,6 +26,7 @@ try:
             Ab.right(30)
         else:
             print ("main_Error")
+        time.sleep(300);
 
 
 except KeyboardInterrupt:
