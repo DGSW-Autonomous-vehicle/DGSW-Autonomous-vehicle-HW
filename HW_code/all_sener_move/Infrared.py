@@ -1,6 +1,6 @@
 import RPi.GPIO as GPIO
 import time
-import treading
+import threading
 
 DR_pin = 16 #pin number
 DL_pin = 19
