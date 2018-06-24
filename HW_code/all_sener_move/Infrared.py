@@ -29,11 +29,11 @@ class Infrared(treading.Thread):
 				self.DR = GPIO.input(DR_pin)
 				self.DL = GPIO.input(DL_pin)
 
-				if(DL == 1 and DR == 1):
+				if(self.DL == 1 and self.DR == 1):
 					self.flag = 1
-				elif(DL == 0 and DR == 1):
+				elif(self.DL == 0 and self.DR == 1):
 					self.flag = 3
-				elif(DL == 1 and DR == 0):
+				elif(self.DL == 1 and self.DR == 0):
 					self.flag = 2
 				else:
 					self.flag = -1
