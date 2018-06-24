@@ -1,0 +1,40 @@
+import RPi.GPIO as GPIO
+import time
+import treading
+
+DR_pin = 16 #pin number
+DL_pin = 19
+
+#Infrared Setup
+
+GPIO.setmode(GPIO.BCM)
+GPIO.setwarnings(False)
+GPIO.setup(DR,GPIO.IN,GPIO.PUD_UP)
+GPIO.setup(DL,GPIO.IN,GPIO.PUD_UP)
+
+class Infrared(treading.Thread):
+	#flag
+	# -1 Error
+	# 1 go
+	# 2 left
+	# 3 rignt
+
+	flag = -1
+
+	def run(self):
+		self.read_Inf()
+
+	def read_Inf(self):
+			while(1):
+			DR = GPIO.input(DR_pin)
+			DL = GPIO.input(DL_pin)
+
+			if(DL == 1 and DR == 1):
+				self.flag = 1
+			elif(DL == 0 and DR == 1):
+				self.flag = 3
+			elif(DL == 1 and DR == 0):
+				self.flag = 2
+			else:
+				self.flag = -1
+			time.sleep(100);
