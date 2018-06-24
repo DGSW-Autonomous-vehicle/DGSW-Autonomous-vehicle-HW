@@ -26,15 +26,15 @@ class Infrared(treading.Thread):
 
 	def read_Inf(self):
 			while(1):
-			DR = GPIO.input(DR_pin)
-			DL = GPIO.input(DL_pin)
+				self.DR = GPIO.input(DR_pin)
+				self.DL = GPIO.input(DL_pin)
 
-			if(DL == 1 and DR == 1):
-				self.flag = 1
-			elif(DL == 0 and DR == 1):
-				self.flag = 3
-			elif(DL == 1 and DR == 0):
-				self.flag = 2
-			else:
-				self.flag = -1
-			time.sleep(100);
+				if(DL == 1 and DR == 1):
+					self.flag = 1
+				elif(DL == 0 and DR == 1):
+					self.flag = 3
+				elif(DL == 1 and DR == 0):
+					self.flag = 2
+				else:
+					self.flag = -1
+				time.sleep(100);
