@@ -7,12 +7,15 @@ DL_pin = 19
 
 #Infrared Setup
 
+DR = 0
+DL = 0
+
 GPIO.setmode(GPIO.BCM)
 GPIO.setwarnings(False)
 GPIO.setup(DR,GPIO.IN,GPIO.PUD_UP)
 GPIO.setup(DL,GPIO.IN,GPIO.PUD_UP)
 
-class Infrared(treading.Thread):
+class Infrared(threading.Thread):
 	#flag
 	# -1 Error
 	# 1 go
@@ -29,12 +32,17 @@ class Infrared(treading.Thread):
 				self.DR = GPIO.input(DR_pin)
 				self.DL = GPIO.input(DL_pin)
 
-				if(self.DL == 1 and self.DR == 1):
+				if(self.DL == 0 and self.DR == 0):
 					self.flag = 1
+
+				elif(self.DL == 1 and self.DR == 1):
+					self.flag = 0
+
 				elif(self.DL == 0 and self.DR == 1):
 					self.flag = 3
+
 				elif(self.DL == 1 and self.DR == 0):
 					self.flag = 2
 				else:
 					self.flag = -1
-				time.sleep(100);
+				time.sleep(100)

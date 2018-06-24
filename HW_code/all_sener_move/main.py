@@ -3,7 +3,7 @@ import time
 import threading
 
 from AlphaBot2 import AlphaBot2
-from Infrared import infrared
+from Infrared import Infrared
 
 Ab = AlphaBot2()
 
@@ -16,6 +16,8 @@ try:
     while(1):
         if(In.flag == -1):
             print("Infrared_Error")
+        elif(In.flag == 0):
+            Ab.stop()
         elif(In.flag == 1):
             Ab.forward()
         elif(In.flag == 2):
