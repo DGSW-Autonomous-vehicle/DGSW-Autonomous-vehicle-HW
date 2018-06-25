@@ -24,6 +24,9 @@ class Infrared(threading.Thread):
 
 	flag = -1
 
+	def __init__(self):
+		threading.Thread.__init__(self)
+
 	def run(self):
 		self.read_Inf()
 
@@ -50,5 +53,5 @@ class Infrared(threading.Thread):
 					print ("DR =")
 					print (self.DR)
 					print()
-					
+
 				time.sleep(100)
