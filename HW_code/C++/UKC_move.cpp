@@ -152,14 +152,14 @@ void left(){
 /////////////// 속도값 제어 함수 ///////////////////
 
 void setPWM(int a, int b){
-
+    setPWMA(a);
+    setPWMB(b);
 }
 
 void setPWMA(int a){
-
-
+    ENA = a;
 }
 
 void setPWMB(int a){
-
+    ENB = a;
 }
