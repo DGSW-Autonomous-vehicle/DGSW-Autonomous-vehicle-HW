@@ -15,7 +15,7 @@
 #define ena 22
 
 //오른쪽 바퀴 PWM핀
-#define enb 22
+#define enb 25
 
 using namespace std;
 
