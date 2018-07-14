@@ -63,3 +63,14 @@ void init_wringPi(){
     softPwmCreate(enb,0,255);
 }
 
+void forward(){
+   softPwmWrite(ena,ENA);
+   softPwmWrite(enb,ENB);
+
+   digitalWrite(ain1,LOW);
+   digitalWrite(ain2,HIGH);
+   digitalWrite(bin1,LOW);
+   digitalWrite(bin2,HIGH);
+}
+
+
