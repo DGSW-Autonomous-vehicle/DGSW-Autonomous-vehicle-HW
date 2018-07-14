@@ -11,3 +11,7 @@ echo "vim 설정 중..."
 git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim
 
 vim +PluginInstall +aqll
+
+echo "wirginPi 설치"
+git clone git://git.drogon.net/wiringPi
+./wirginPi/build

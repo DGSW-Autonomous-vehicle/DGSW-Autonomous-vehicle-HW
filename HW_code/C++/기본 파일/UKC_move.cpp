@@ -23,7 +23,7 @@ int main(){
 void init_wringPi(){
     if(wiringPiSetup() == -1){
         cout << "WirginPi Setup Error" << endl;   
-        return 1;
+        return;
     }
 
     pinMode(ain1,OUTPUT);
