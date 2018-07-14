@@ -36,7 +36,7 @@ void left();
 void right();
 
 //속도값 제어함수
-void setPWM(int a,int b)); 
+void setPWM(int a,int b); 
 void setPWMA(int a); // 왼쪽 바퀴
 void setPWMB(int a); // 오른쪽 바퀴
 
@@ -49,9 +49,30 @@ int main(){
     init_wringPi(); //초기화 코드
 
     while(1) { 
+        cout << "forward" << endl;
+        forward();
+        delay(1000);
 
-        forword();
+        cout << "back" << endl;
+        back();
+        delay(1000);
 
+        
+        cout << "right" << endl;
+        right();
+        delay(1000);
+
+        
+        cout << "left" << endl;
+        left();
+        delay(1000);
+
+        
+        cout << "stop" << endl;
+        stop();
+        delay(1000);
+
+        
     }
 }
 
@@ -114,7 +135,7 @@ void right(){
 
     digitalWrite(ain1,LOW);
     digitalWrite(ain2,HIGH);
-    digitalWrite(bin1,HIHG);
+    digitalWrite(bin1,HIGH);
     digitalWrite(bin2,LOW);
 }
 
