@@ -6,10 +6,10 @@ int main(){
 	Move.init_wringPi();
 
 	cout << "Test 시작" << endl;
-	forward();
+	Move.forward();
 
 	delay(1000);
-	stop();
+	Move.stop();
 
 	cout << "성공적" << endl;
 
