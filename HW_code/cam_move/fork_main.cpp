@@ -1,7 +1,9 @@
-#include "Unreal_Liner.h"
-#include "TL.hpp"
-#include "UKC_move_class.h"
+//#include "Unreal_Liner.h"
+//#include "TL.hpp"
+//#include "UKC_move_class.h"
 
+
+#include <iostream>
 #include <unistd.h>
 #include <thread>
 
@@ -14,27 +16,31 @@ void Move_UKC();
 
 int main(int argc, char const *argv[])
 {
-    pid_t pid;
+    thread Liner_th(&Liner_ando);
+    Liner_th.join();
 
-    pid = fork();
-
-    if(pid == 0){ // 자식 프로세스 Liner 실행
-        Liner_ando();
-    }else{
-        Move_UKC();
-    }
-
+    Move_UKC();
+    
     return 0;
 }
 
 void Liner_ando(){
+    while(1){
+        cout << "analog" << endl;
+    }
+    /*
     Liner Line;
     Line.startLiner();
     return;
+    */
 }
 
 void Move_UKC(){
-
+    while(1){
+        cout << "digital" <<endl;
+    }
+    
+    /*
     UKC_move Move;
 
     while(1){
@@ -64,4 +70,5 @@ void Move_UKC(){
 
     }    
     return;
- }
+    */
+}
