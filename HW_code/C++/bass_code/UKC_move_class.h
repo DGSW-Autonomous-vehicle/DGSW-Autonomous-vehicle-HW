@@ -19,14 +19,17 @@
 
 using namespace std;
 
+class UKC_move{
+
+ private:
+
 // 속도값 변수
 char ENA = 100;
 char ENB = 100;
 
-//////////////// 자치차량 함수 선언부 /////////////////////////
+public:
 
-// 초기화 함수
-void init_wringPi();
+void init_wringPi();  // 초기화 함수
 
 // 움직임제어 함수 
 void forward();
@@ -39,45 +42,9 @@ void right();
 void setPWM(int a,int b); 
 void setPWMA(int a); // 왼쪽 바퀴
 void setPWMB(int a); // 오른쪽 바퀴
-
-//////////////////////////////////////////////////////////////
-
-
-//// 우리의 개쩌는 main 함수님 ////
-int main(){
-
-    init_wringPi(); //초기화 코드
-
-    while(1) { 
-        cout << "forward" << endl;
-        forward();
-        delay(1000);
-
-        cout << "back" << endl;
-        back();
-        delay(1000);
-
-        
-        cout << "right" << endl;
-        right();
-        delay(1000);
-
-        
-        cout << "left" << endl;
-        left();
-        delay(1000);
-
-        
-        cout << "stop" << endl;
-        stop();
-        delay(1000);
-
-        
-    }
-}
+};
 
 /////////////////// 초기화 함수 /////////////////
-
 void init_wringPi(){
     if(wiringPiSetup() == -1){
         cout << "WirginPi Setup Error" << endl;   
@@ -95,7 +62,6 @@ void init_wringPi(){
     softPwmCreate(ena,0,255);
     softPwmCreate(enb,0,255);
 }
-
 
 //////////////////// 움직임 제어함수 /////////////
 
