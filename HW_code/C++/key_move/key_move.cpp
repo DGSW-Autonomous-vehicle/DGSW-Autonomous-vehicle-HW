@@ -33,6 +33,11 @@ int main(){
 					Move.stop();
 					break;
 
+				case 'h':
+					Move.stop();
+					cout << "Bey" << endl;	
+					return 0;
+
 			}
 		}
 		else{  // 키입력이 없을 경우

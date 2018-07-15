@@ -2,7 +2,7 @@
 #include <wiringPi.h>
 #include <softPwm.h>
 #include <stdlib.h>
-#include <conio.h>
+#include <curses.h>
 
 //왼쪽 바퀴 핀
 #define ain1 26
@@ -25,8 +25,8 @@ class UKC_move{
  private:
 
 // 속도값 변수
-char ENA = 100;
-char ENB = 100;
+char ENA = 120;
+char ENB = 120;
 
 public:
 
@@ -87,8 +87,8 @@ void UKC_move::stop(){
 }
 
 void UKC_move::back(){
-    softPwmWrite(ena,50);
-    softPwmWrite(enb,50);
+    softPwmWrite(ena,ENA);
+    softPwmWrite(enb,ENB);
 
     digitalWrite(ain1,HIGH);
     digitalWrite(ain2,LOW);
@@ -97,8 +97,8 @@ void UKC_move::back(){
 }
 
 void UKC_move::right(){
-    softPwmWrite(ena,30);
-    softPwmWrite(enb,30);
+    softPwmWrite(ena,45);
+    softPwmWrite(enb,45);
 
     digitalWrite(ain1,LOW);
     digitalWrite(ain2,HIGH);
@@ -107,8 +107,8 @@ void UKC_move::right(){
 }
 
 void UKC_move::left(){
-    softPwmWrite(ena,30);
-    softPwmWrite(enb,30);
+    softPwmWrite(ena,45);
+    softPwmWrite(enb,45);
 
     digitalWrite(ain1,HIGH);
     digitalWrite(ain2,LOW);
