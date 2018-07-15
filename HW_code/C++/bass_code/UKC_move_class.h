@@ -45,7 +45,7 @@ void setPWMB(int a); // 오른쪽 바퀴
 };
 
 /////////////////// 초기화 함수 /////////////////
-void init_wringPi(){
+void UKC_move::init_wringPi(){
     if(wiringPiSetup() == -1){
         cout << "WirginPi Setup Error" << endl;   
         return;
@@ -65,7 +65,7 @@ void init_wringPi(){
 
 //////////////////// 움직임 제어함수 /////////////
 
-void forward(){
+void UKC_move::forward(){
    softPwmWrite(ena,ENA);
    softPwmWrite(enb,ENB);
 
@@ -75,7 +75,7 @@ void forward(){
    digitalWrite(bin2,HIGH);
 }
 
-void stop(){
+void UKC_move::stop(){
    softPwmWrite(ena,0);
    softPwmWrite(enb,0);
 
@@ -85,7 +85,7 @@ void stop(){
    digitalWrite(bin2,LOW);
 }
 
-void back(){
+void UKC_move::back(){
     softPwmWrite(ena,50);
     softPwmWrite(enb,50);
 
@@ -95,7 +95,7 @@ void back(){
     digitalWrite(bin2,LOW);
 }
 
-void right(){
+void UKC_move::right(){
     softPwmWrite(ena,30);
     softPwmWrite(enb,30);
 
@@ -105,7 +105,7 @@ void right(){
     digitalWrite(bin2,LOW);
 }
 
-void left(){
+void UKC_move::left(){
     softPwmWrite(ena,30);
     softPwmWrite(enb,30);
 
@@ -117,15 +117,15 @@ void left(){
 
 /////////////// 속도값 제어 함수 ///////////////////
 
-void setPWM(int a, int b){
+void UKC_move::setPWM(int a, int b){
     setPWMA(a);
     setPWMB(b);
 }
 
-void setPWMA(int a){
+void UKC_move::setPWMA(int a){
     ENA = a;
 }
 
-void setPWMB(int a){
+void UKC_move::setPWMB(int a){
     ENB = a;
 }
