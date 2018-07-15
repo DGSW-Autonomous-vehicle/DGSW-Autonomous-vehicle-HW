@@ -41,7 +41,7 @@ private:
 
 public:
 	void startLiner();
-	bool modes = 1;
+	bool modes = 0;
 	int flag = -1;
 };
 

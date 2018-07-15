@@ -1,50 +1,43 @@
-//#include "Unreal_Liner.h"
-//#include "TL.hpp"
-//#include "UKC_move_class.h"
+#include "Unreal_Liner.h"
+#include "TL.hpp"
+#include "UKC_move_class.h"
 
-
-#include <iostream>
-#include <unistd.h>
 #include <thread>
-
-using namespace std;
 
 int flag = -1;
 
 void Liner_ando();
 void Move_UKC();
 
+
+Liner Line;
+UKC_move Move;
+
 int main(int argc, char const *argv[])
 {
+    Move.init_wringPi();
+    
     thread Liner_th(&Liner_ando);
-    Liner_th.join();
+    thread Move_th(&Move_UKC);
 
-    Move_UKC();
+    Move_th.join();
+    Liner_th.join();
     
     return 0;
 }
 
 void Liner_ando(){
-    while(1){
-        cout << "analog" << endl;
-    }
-    /*
-    Liner Line;
+    cout <<"Liner 진입"<< endl;    
     Line.startLiner();
     return;
-    */
 }
 
 void Move_UKC(){
+    cout << "Move 진입" << endl;
     while(1){
-        cout << "digital" <<endl;
-    }
-    
-    /*
-    UKC_move Move;
-
-    while(1){
-
+        flag = Line.flag;
+        cout << "flag = " << flag << endl;
+        
         switch (flag){
             case -1: // 정지
                 Move.stop();
@@ -64,11 +57,10 @@ void Move_UKC(){
             default:
                 cout << "배애애에에" << endl;
                 Move.stop();
-                break;
+                return;
         }
         delay(80);
 
     }    
     return;
-    */
 }

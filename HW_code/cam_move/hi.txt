@@ -1,0 +1,1 @@
+g++ -o test -l wiringPi fork_main.cpp 'pkg-config opencv --cflags-libs' -l pthread
