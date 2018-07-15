@@ -3,51 +3,57 @@
 #include "UKC_move_class.h"
 
 #include <unistd.h>
+#include <thread>
+
+int flag = -1;
+
+void Liner_ando();
+void Move_UKC();
 
 int main(int argc, char const *argv[])
 {
-    pid_t pid;
+    thread Liner_th(&Liner_ando);
+    Liner_th.join();
 
-    pid = fork();
-
-    char flag;
-
-    if(pid == 0){ // Liner 프로세스 실행
-        Liner Line;
-        Line.startLiner();
-        a = Line.flag;
-    }else{
-        UKC_move Move;
+    Move_UKC();
     
-        while(1){
+    return 0;
+}
 
-            cout << "flag = " << a << endl;
+void Liner_ando(){
+    Liner Line;
+    Line.startLiner();
+    return;
+}
 
-            switch (a){
-                case -1: // 정지
-                    Move.stop();
-                    break;
+void Move_UKC(){
+    UKC_move Move;
 
-                case 0: //직진
-                    Move.forward();
-                    break;
+    while(1){
 
-                case 1: // 오른쪽
-                    Move.right();
-                    break;
+        switch (flag){
+            case -1: // 정지
+                Move.stop();
+                break;
 
-                case 2: // 좌파
-                    Move.left();
-                    break;
-                default:
-                    cout << "배애애에에" << endl;
-                    Move.stop();
-                    break;
-            }
+            case 0: //직진
+                Move.forward();
+                break;
+
+            case 1: // 오른쪽
+                Move.right();
+                break;
+
+            case 2: // 좌파
+                Move.left();
+                break;
+            default:
+                cout << "배애애에에" << endl;
+                Move.stop();
+                break;
         }
-
-        delay(30);
+        delay(80);
 
     }    
-    return 0;
+    return;
 }
