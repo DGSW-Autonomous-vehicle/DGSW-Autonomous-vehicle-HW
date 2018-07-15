@@ -10,41 +10,36 @@ int main(){
 	cout << "'h' key is exit()"<< endl;
 
 	while(1){
-		if(kbhit()){ //키가 입력이 될 경우
-			input = getch();
+		input = getch();
 
-			switch(input){
-				case 'w':
-					Move.forward();
-					break;
+		switch(input){
+			case 'w':
+				Move.forward();
+				break;
 
-				case 'a':
-					Move.left();
-					break;
+			case 'a':
+				Move.left();
+				break;
 
-				case 's':
-					Move.back();
-					break;
+			case 's':
+				Move.back();
+				break;
 
-				case 'd':
-					Move.right();
-					break;
-				case ' ':
-					Move.stop();
-					break;
+			case 'd':
+				Move.right();
+				break;
+			case ' ':
+				Move.stop();
+				break;
 
-				case 'h':
-					Move.stop();
-					cout << "Bey" << endl;	
-					return 0;
+			case 'h':
+				Move.stop();
+				cout << "Bye" << endl;	
+				return 0;
 
-			}
-		}
-		else{  // 키입력이 없을 경우
-			Move.stop();
 		}
 	}
 
 	return 0;
-	
+
 }

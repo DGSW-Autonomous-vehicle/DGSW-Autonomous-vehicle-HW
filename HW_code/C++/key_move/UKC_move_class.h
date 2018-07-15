@@ -2,7 +2,7 @@
 #include <wiringPi.h>
 #include <softPwm.h>
 #include <stdlib.h>
-#include <curses.h>
+#include "getch.h"
 
 //왼쪽 바퀴 핀
 #define ain1 26
