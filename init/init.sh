@@ -20,3 +20,4 @@ sudo apt-get install ncureses-dev
 echo "wirginPi 설치"
 git clone git://git.drogon.net/wiringPi
 ./wirginPi/build
+
