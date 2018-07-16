@@ -17,31 +17,42 @@
 //오른쪽 바퀴 PWM핀
 #define enb 25
 
+//회전 속도 PWM 값
+#define speed_spin 20
+
 using namespace std;
 
 class UKC_move{
 
- private:
+    private:
+        // 속도값 변수
+        char ENA;
+        char ENB;
 
-// 속도값 변수
-char ENA = 70;
-char ENB = 70;
+        int speed_a = 70;
+        int speed_b = 70;
 
-public:
+    public:
+        UKC_move(){
+            ENA = speed_a;
+            ENB = speed_b;
+        }
 
-void init_wringPi();  // 초기화 함수
+        void init_wringPi();  // 초기화 함수
 
-// 움직임제어 함수 
-void forward();
-void stop();
-void back();
-void left();
-void right();
+        // 움직임제어 함수 
+        void forward();
+        void forward(int a,int b);
+        void stop();
+        void back();
+        void left();
+        void right();
 
-//속도값 제어함수
-void setPWM(int a,int b); 
-void setPWMA(int a); // 왼쪽 바퀴
-void setPWMB(int a); // 오른쪽 바퀴
+        //속도값 제어함수
+        void setPWM(int a,int b); 
+        void setPWMA(int a); // 왼쪽 바퀴
+        void setPWMB(int a); // 오른쪽 바퀴
+        void setSpeed(int a,int b); // 기본 속도 설정
 };
 
 /////////////////// 초기화 함수 /////////////////
@@ -75,6 +86,11 @@ void UKC_move::forward(){
    digitalWrite(bin2,HIGH);
 }
 
+void UKC_move::forward(int a,int b){
+    setPWM(a,b);
+    UKC_move::forward();
+}
+
 void UKC_move::stop(){
    softPwmWrite(ena,0);
    softPwmWrite(enb,0);
@@ -96,8 +112,8 @@ void UKC_move::back(){
 }
 
 void UKC_move::right(){
-    softPwmWrite(ena,25);
-    softPwmWrite(enb,25);
+    softPwmWrite(ena,speed_spin);
+    softPwmWrite(enb,speed_spin);
 
     digitalWrite(ain1,LOW);
     digitalWrite(ain2,HIGH);
@@ -106,8 +122,8 @@ void UKC_move::right(){
 }
 
 void UKC_move::left(){
-    softPwmWrite(ena,25);
-    softPwmWrite(enb,25);
+    softPwmWrite(ena,speed_spin);
+    softPwmWrite(enb,speed_spin);
 
     digitalWrite(ain1,HIGH);
     digitalWrite(ain2,LOW);
@@ -128,4 +144,12 @@ void UKC_move::setPWMA(int a){
 
 void UKC_move::setPWMB(int a){
     ENB = a;
+}
+
+void setSpeed(int a,int b){
+    
+    UKC_move::stop();
+    speed_a = a;
+    speed_b = b;
+    UKC_move::setPWM(speed_a,speed_b);
 }
