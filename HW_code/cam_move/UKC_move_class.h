@@ -24,8 +24,8 @@ class UKC_move{
  private:
 
 // 속도값 변수
-char ENA = 120;
-char ENB = 120;
+char ENA = 70;
+char ENB = 70;
 
 public:
 
@@ -96,8 +96,8 @@ void UKC_move::back(){
 }
 
 void UKC_move::right(){
-    softPwmWrite(ena,45);
-    softPwmWrite(enb,45);
+    softPwmWrite(ena,25);
+    softPwmWrite(enb,25);
 
     digitalWrite(ain1,LOW);
     digitalWrite(ain2,HIGH);
@@ -106,8 +106,8 @@ void UKC_move::right(){
 }
 
 void UKC_move::left(){
-    softPwmWrite(ena,45);
-    softPwmWrite(enb,45);
+    softPwmWrite(ena,25);
+    softPwmWrite(enb,25);
 
     digitalWrite(ain1,HIGH);
     digitalWrite(ain2,LOW);

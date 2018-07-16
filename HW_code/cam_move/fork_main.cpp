@@ -59,7 +59,7 @@ void Move_UKC(){
                 Move.stop();
                 return;
         }
-        delay(80);
+        delay(10);
 
     }    
     return;

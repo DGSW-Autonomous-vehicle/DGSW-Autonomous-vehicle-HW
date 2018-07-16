@@ -9,6 +9,7 @@ using namespace std;
 
 class Liner {
 private:
+	//string file = "image/now.jpg";
 	Mat HSV;
 	Mat img;
 	int roi_height = 380;
@@ -20,8 +21,10 @@ private:
 	Rect Roi3 = Rect(Point(100 - roisize.width, roi_height), roisize);
 	Rect Roi4 = Rect(Point(640 - 100, roi_height), roisize);
 
-	int golowX = 290;
-	int gohighX = 350;
+	int D = 30;
+	int C = 320;
+	int golowX = C-D;
+	int gohighX = C+D;
 
 	float radtodegree(float th);
 
@@ -52,6 +55,10 @@ public:
 #  2 = go left
 */
 
+/*
+ 150 ~ 160 && 330 ~ 340
+  20 ~  30 && 200 ~ 210
+*/
 
 float Liner::radtodegree(float th) {
 	return  th / M_PI * 180;
@@ -220,15 +227,20 @@ void Liner::startLiner() {
 	Mat img;
 	VideoCapture cap(0);
 
+	float angle;
+
 	while (1) {
+		angle = -1;
 		Avgpt = Point(-1, -1);
 		cap >> img;
+		flip(img, img, -1);
+		//img = imread(file);
 		line_1 = getlines(img, 100, 200, Roi1, modes);
 		line_2 = getlines(img, 100, 200, Roi2, modes);
 
 		if (line_1.size() != 0 && line_2.size() != 0) {//1,2占쏙옙 占쏙옙占?占쏙옙占쏙옙占쏙옙 占쏙옙占쏙옙
 			if (modes)
-				cout << "1,2占쏙옙占?占쏙옙占쏙옙" << endl;
+				cout << "1 and 2" << endl;
 			points = getCrossPoint(img, line_1, line_2, modes);
 			if (points.size() != 0) {
 				Avgpt = AvgPoint(points);
@@ -239,32 +251,84 @@ void Liner::startLiner() {
 		else {
 			if (line_1.size() == 0 && line_2.size() == 0) {//占쌕안곤옙占쏙옙
 				if (modes)
-					cout << "1,2占쏙옙 占쏙옙 占쏙옙占쏙옙" << endl;
+					cout << "not 1 and 2" << endl;
 				line_3 = getlines(img, 100, 200, Roi3, modes);
 				line_4 = getlines(img, 100, 200, Roi4, modes);
-			}
-			else {//1,2占쏙옙占싹놂옙 占쏙옙占쏙옙
-				if (modes)
-					cout << "1,2占쏙옙 占싹놂옙 占쏙옙占쏙옙" << endl;
-				float angle;
-				if (line_1.size() != 0) { //1占쏙옙占쏙옙 占쏙옙占쏙옙
-					angle = AvgLineAngle(line_1);
-				}
-				else
-					if (line_2.size() != 0) {//2占쏙옙占쏙옙 占쏙옙占쏙옙
-						angle = AvgLineAngle(line_2);
-					}
 
-				if ((angle > 1 && angle < 89) || (angle > 181 && angle < 269)) {//占쏙옙占쏙옙占쏙옙占쏙옙占쏙옙
+				if (line_3.size() != 0 && line_4.size() != 0) {
+					points = getCrossPoint(img, line_3, line_4, modes);
+					if (points.size() != 0) {
+						Avgpt = AvgPoint(points);
+						if (modes)
+							circle(img, Avgpt, 5, Scalar(255, 0, 255), 2);
+					}
+				}
+				else if (line_3.size() != 0) {//line3 is not null
+					angle = AvgLineAngle(line_3);
+				}
+				else if (line_4.size() != 0) {//line4 is not null
+					angle = AvgLineAngle(line_4);
+				}
+				else { // all null
+					//stop
+					Avgpt.x = -1;
+					Avgpt.y = -1;
+				}
+			
+				if ((angle > 150 && angle < 160) || (angle > 330 && angle < 340)) {
+					Avgpt.x = 320;
+					Avgpt.y = 300;
+				}
+				else if ((angle > 20 && angle < 30) || (angle > 200 && angle < 210)) {
+					Avgpt.x = 320;
+					Avgpt.y = 300;
+				}
+				else if ((angle > 1 && angle < 89) || (angle > 181 && angle < 269)) {//占쏙옙占쏙옙占쏙옙占쏙옙占쏙옙
 					Avgpt.x = 600;
 					Avgpt.y = 300;
 				}
-				else
-					if ((angle > 91 && angle < 179) || (angle > 271 && angle < 359)) {//占쏙옙占쏙옙占쏙옙占쏙옙
-						Avgpt.x = 40;
-						Avgpt.y = 300;
-					}
+				else if ((angle > 91 && angle < 179) || (angle > 271 && angle < 359)) {//占쏙옙占쏙옙占쏙옙占쏙옙
+					Avgpt.x = 40;
+					Avgpt.y = 300;
+				}
+				else {
+					Avgpt.x = -1;
+					Avgpt.y = -1;
+				}
+				cout << "angle = " << angle << endl;
+			}
+			else {//1,2占쏙옙占싹놂옙 占쏙옙占쏙옙
+				if (modes)
+					cout << "1 or 2" << endl;
 
+				if (line_1.size() != 0) { //1占쏙옙占쏙옙 占쏙옙占쏙옙
+					angle = AvgLineAngle(line_1);
+				}
+				else if (line_2.size() != 0) {//2占쏙옙占쏙옙 占쏙옙占쏙옙
+					angle = AvgLineAngle(line_2);
+				}
+				cout << "angle = " <<angle << endl;
+
+				if ((angle > 150 && angle < 160) || (angle > 330 && angle < 340)) {
+					Avgpt.x = 320;
+					Avgpt.y = 300;
+				}
+				else if ((angle > 20 && angle < 30) || (angle > 200 && angle < 210)) {
+					Avgpt.x = 320;
+					Avgpt.y = 300;
+				}
+				else if ((angle > 1 && angle < 89) || (angle > 181 && angle < 269)) {//占쏙옙占쏙옙占쏙옙占쏙옙占쏙옙
+					Avgpt.x = 600;
+					Avgpt.y = 300;
+				}
+				else if ((angle > 91 && angle < 179) || (angle > 271 && angle < 359)) {//占쏙옙占쏙옙占쏙옙占쏙옙
+					Avgpt.x = 40;
+					Avgpt.y = 300;
+				}
+				else {
+					Avgpt.x = -1;
+					Avgpt.y = -1;
+				}
 			}
 		}
 
@@ -284,3 +348,11 @@ void Liner::startLiner() {
 		waitKey(60);
 	}
 }
+/*
+int main(){
+	Liner line;
+	line.startLiner();
+	waitKey(0);
+	return 0;
+}
+*/
