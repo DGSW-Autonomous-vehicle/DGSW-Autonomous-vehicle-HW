@@ -147,9 +147,8 @@ void UKC_move::setPWMB(int a){
 }
 
 void setSpeed(int a,int b){
-    
     UKC_move::stop();
-    speed_a = a;
-    speed_b = b;
+    UKC_move::speed_a = a;
+    UKC_move::speed_b = b;
     UKC_move::setPWM(speed_a,speed_b);
 }
