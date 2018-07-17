@@ -302,8 +302,8 @@ void Liner::startLiner() {
 
 		int TX = getCenterline(img);
 		if (flag_center(TX)) {
-			cout << flag << endl;
-			imshow("aaaaaaa",img);
+//			cout << flag << endl;
+//			imshow("aaaaaaa",img);
 			waitKey(30);
 			continue;
 		}
@@ -368,7 +368,7 @@ void Liner::startLiner() {
 					Avgpt.x = -1;
 					Avgpt.y = -1;
 				}
-				cout << "angle = " << angle << endl;
+//				cout << "angle = " << angle << endl;
 			}
 			else {//1,2占쏙옙占싹놂옙 占쏙옙占쏙옙
 				if (modes)

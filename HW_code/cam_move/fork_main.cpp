@@ -49,17 +49,17 @@ void Move_UKC(){
                 break;
 
             case 1: // 오른쪽
-                Move.right();
+                Move.forward(50,20);
                 break;
 
             case 2: // 좌파
-                Move.left();
+                Move.forward(20,50);
                 break;
             case 3:
-                Move.forward(40,20);
+                Move.forward(60,30);
                 break;
             case 4:
-                Move.forward(20,40);
+                Move.forward(30,60);
                 break;
 
             default:
