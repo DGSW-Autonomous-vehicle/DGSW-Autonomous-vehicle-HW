@@ -30,7 +30,7 @@ class UKC_move{
         char ENB;
 
         int speed_a = 70;
-        int speed_b = 70;
+        int speed_b = 65;
 
     public:
         UKC_move(){
@@ -42,7 +42,7 @@ class UKC_move{
 
         // 움직임제어 함수 
         void forward();
-        void forward(int a,int b);
+        void forward(int,int);
         void stop();
         void back();
         void left();
@@ -146,7 +146,7 @@ void UKC_move::setPWMB(int a){
     ENB = a;
 }
 
-void setSpeed(int a,int b){
+void UKC_move::setSpeed(int a,int b){
     UKC_move::stop();
     UKC_move::speed_a = a;
     UKC_move::speed_b = b;

@@ -39,6 +39,7 @@ void Move_UKC(){
         cout << "flag = " << flag << endl;
         
         switch (flag){
+           
             case -1: // 정지
                 Move.stop();
                 break;
@@ -54,12 +55,19 @@ void Move_UKC(){
             case 2: // 좌파
                 Move.left();
                 break;
+            case 3:
+                Move.forward(40,20);
+                break;
+            case 4:
+                Move.forward(20,40);
+                break;
+
             default:
                 cout << "배애애에에" << endl;
                 Move.stop();
                 return;
         }
-        delay(10);
+        delay(20);
 
     }    
     return;

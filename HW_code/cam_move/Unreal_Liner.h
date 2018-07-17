@@ -44,7 +44,7 @@ private:
 
 public:
 	void startLiner();
-	bool modes = 1;
+	bool modes = 0;
 	int flag = -1;
 };
 
@@ -284,11 +284,11 @@ void Liner::startLiner() {
 					Avgpt.y = 300;
 				}
 				else if ((angle > 1 && angle < 89) || (angle > 181 && angle < 269)) {//占쏙옙占쏙옙占쏙옙占쏙옙占쏙옙
-					Avgpt.x = 600;
+					Avgpt.x = 40;
 					Avgpt.y = 300;
 				}
 				else if ((angle > 91 && angle < 179) || (angle > 271 && angle < 359)) {//占쏙옙占쏙옙占쏙옙占쏙옙
-					Avgpt.x = 40;
+					Avgpt.x = 600;
 					Avgpt.y = 300;
 				}
 				else {

@@ -26,7 +26,7 @@ class UKC_move{
 
 // 속도값 변수
 char ENA = 120;
-char ENB = 120;
+char ENB = 113;
 
 public:
 
