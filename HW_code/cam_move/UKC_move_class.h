@@ -29,8 +29,8 @@ class UKC_move{
         char ENA;
         char ENB;
 
-        int speed_a = 70;
-        int speed_b = 65;
+        int speed_a = 100;
+        int speed_b = 100;
 
     public:
         UKC_move(){

@@ -51,16 +51,16 @@ class AlphaBot2(object):
         GPIO.output(self.BIN2, GPIO.LOW)
 
     def left(self):
-        self.PWMA.ChangeDutyCycle(20)
-        self.PWMB.ChangeDutyCycle(20)
+        self.PWMA.ChangeDutyCycle(40)
+        self.PWMB.ChangeDutyCycle(40)
         GPIO.output(self.AIN1, GPIO.HIGH)
         GPIO.output(self.AIN2, GPIO.LOW)
         GPIO.output(self.BIN1, GPIO.LOW)
         GPIO.output(self.BIN2, GPIO.HIGH)
 
     def right(self):
-        self.PWMA.ChangeDutyCycle(20)
-        self.PWMB.ChangeDutyCycle(20)
+        self.PWMA.ChangeDutyCycle(40)
+        self.PWMB.ChangeDutyCycle(40)
         GPIO.output(self.AIN1, GPIO.LOW)
         GPIO.output(self.AIN2, GPIO.HIGH)
         GPIO.output(self.BIN1, GPIO.HIGH)
