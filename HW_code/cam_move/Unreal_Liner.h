@@ -9,7 +9,7 @@ using namespace std;
 
 class Liner {
 private:
-	//string file = "image/now.jpg";
+	string file = "image/0.jpg";
 	Mat HSV;
 	Mat img;
 	int roi_height = 380;
@@ -42,6 +42,10 @@ private:
 
 	void set_flag(Point p);
 
+	int flag_center(int Tx);
+
+	int getCenterline(Mat src);
+
 public:
 	void startLiner();
 	bool modes = 0;
@@ -53,6 +57,8 @@ public:
 #  0 = go throught
 #  1 = go right
 #  2 = go left
+#  3 = go and right
+#  4 = go and left
 */
 
 /*
@@ -89,7 +95,7 @@ vector<Vec2f> Liner::getlines(Mat src, int lowT, int highT, Rect roi_rect, bool 
 	//cvtColor(roi,roi,COLOR_BGR2GRAY);
 	Mat edgs;
 	Canny(roi, edgs, lowT, highT);
-	HoughLines(edgs, lines, 1, M_PI / 180, 45);
+	HoughLines(edgs, lines, 1, M_PI / 180, 41);
 	if (mode == 1) {
 		if (lines.size() != 0) {
 			drawlines(src, lines, roi_rect);
@@ -193,28 +199,86 @@ float Liner::AvgLineAngle(vector<Vec2f> line) {
 	return (thsum / line.size());
 }
 
+int Liner::getCenterline(Mat src) {
+	int H = roi_height + roisize.height;
+	Rect roi_h = Rect(Point(0,H),Point(640,H+1));
+	Mat roi = src(roi_h);
+	Mat hsvroi;
+	cvtColor(roi,hsvroi,COLOR_BGR2HSV);
+
+	int cnt = 0;
+	int Rx=0, Lx=0;
+
+	for (int i = 320; i < 640 ; i++) {
+		if (hsvroi.at<Vec3b>(0,i)[1] < 30 && hsvroi.at<Vec3b>(0,i)[2] > 190) {
+			cnt++;
+		}
+		if (cnt > 5) {
+			Rx = i;
+			break;
+		}
+	}
+	cnt = 0;
+	for (int i = 320; i >= 0; i--) {
+		if (hsvroi.at<Vec3b>(0, i)[1] < 30 && hsvroi.at<Vec3b>(0, i)[2] > 190) {
+			cnt++;
+		}
+		if (cnt > 5) {
+			Lx = i;
+			break;
+		}
+	}
+
+	return (Rx + Lx ) / 2;
+}
+
 void Liner::set_flag(Point p) {
 	if (p.x == -1) {
 		flag = -1;
 		return;
 	}
-	else
+	else {
 		if (p.x >= golowX && p.x <= gohighX) {
 			flag = 0;
 			return;
 		}
 		else
-			if (p.x<golowX) {
+			if (p.x < golowX) {
 				flag = 2;
 				return;
 			}
 			else
-				if (p.x>gohighX) {
+				if (p.x > gohighX) {
 					flag = 1;
 					return;
 				}
+	}
 	flag = -1;
 	return;
+}
+
+int Liner::flag_center(int Tx) {
+	if (Tx == 0) {
+		flag = 0;
+		return 0;
+	}
+	else {
+		if (Tx >= golowX && Tx <= gohighX) {
+			flag = 0;
+			return 0;
+		}
+		else
+			if (Tx < golowX) {
+				flag = 4;
+				return 1;
+			}
+			else
+				if (Tx > gohighX) {
+					flag = 3;
+					return 1;
+				}
+	}
+	return 0;
 }
 
 void Liner::startLiner() {
@@ -235,6 +299,15 @@ void Liner::startLiner() {
 		cap >> img;
 		flip(img, img, -1);
 		//img = imread(file);
+
+		int TX = getCenterline(img);
+		if (flag_center(TX)) {
+			cout << flag << endl;
+			imshow("aaaaaaa",img);
+			waitKey(30);
+			continue;
+		}
+
 		line_1 = getlines(img, 100, 200, Roi1, modes);
 		line_2 = getlines(img, 100, 200, Roi2, modes);
 
@@ -264,7 +337,7 @@ void Liner::startLiner() {
 					}
 				}
 				else if (line_3.size() != 0) {//line3 is not null
-					angle = AvgLineAngle(line_3);
+					angle = AvgLineAngle(line_3); 
 				}
 				else if (line_4.size() != 0) {//line4 is not null
 					angle = AvgLineAngle(line_4);
@@ -284,11 +357,11 @@ void Liner::startLiner() {
 					Avgpt.y = 300;
 				}
 				else if ((angle > 1 && angle < 89) || (angle > 181 && angle < 269)) {//占쏙옙占쏙옙占쏙옙占쏙옙占쏙옙
-					Avgpt.x = 40;
+					Avgpt.x = 600;
 					Avgpt.y = 300;
 				}
 				else if ((angle > 91 && angle < 179) || (angle > 271 && angle < 359)) {//占쏙옙占쏙옙占쏙옙占쏙옙
-					Avgpt.x = 600;
+					Avgpt.x = 40;
 					Avgpt.y = 300;
 				}
 				else {
@@ -333,12 +406,15 @@ void Liner::startLiner() {
 		}
 
 		set_flag(Avgpt);
+		//center;
 
 		if (modes) {
 			cout << "flag = " << flag << endl;
+			line(img, Point(TX, 0), Point(TX, 480), Scalar(255, 0, 255), 1);
 			line(img, Point(golowX, 0), Point(golowX, 480), Scalar(255, 255, 255), 1);
 			line(img, Point(320, 0), Point(320, 480), Scalar(0, 0, 0), 1);
 			line(img, Point(gohighX, 0), Point(gohighX, 480), Scalar(255, 255, 255), 1);
+
 			rectangle(img, Roi1, Scalar(0, 0, 0));
 			rectangle(img, Roi2, Scalar(0, 0, 0));
 			rectangle(img, Roi3, Scalar(0, 0, 0));
