@@ -3,6 +3,7 @@
 #include <iostream>
 #include <vector>
 #include "obstacle.hpp"
+#include "TL.hpp"
 
 #define M_PI 3.14159265358979323846
 
@@ -28,6 +29,7 @@ private:
 	int gohighX = C + D;
 	
 	OpenCV_OBS obs;
+	OpenCV_TL traffic;
 
 	float radtodegree(float th);
 
@@ -316,6 +318,9 @@ void Liner::startLiner() {
 		int TX = getCenterline(img);
 		
 		obs.setResources(img, Rect(TX - 60, 240, TX + 60, 400));
+		traffic.setImage(img);
+		
+		int lightflag = traffic.getLightInfo(LIGHT_VERTICAL);
 
 		line_1 = getlines(img, 100, 200, Roi1, modes);
 		line_2 = getlines(img, 100, 200, Roi2, modes);
@@ -422,6 +427,11 @@ void Liner::startLiner() {
 		
 		if(obs.hasOBS(Size(10,10), OBS_RELEASE))
 			flag = -1;
+		
+		if(lightflag == -1)
+			flag = -1;
+		else
+			flag = 0;
 		//center;
 
 		if (modes) {
