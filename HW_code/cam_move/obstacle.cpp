@@ -1,4 +1,4 @@
-#include "obstacle.h"
+#include "obstacle.hpp"
 
 OpenCV_OBS::OpenCV_OBS(){}
 
@@ -33,6 +33,11 @@ bool OpenCV_OBS::hasOBS(Size minSize, int flag) {
 			col_count = 0;
 		}
 	}
+
+	if (flag == OBS_DEBUG) {
+		imshow("OBS_DEBUG", roi);
+	}
+
 	if (row_count >= minSize.height)
 		return true;
 
