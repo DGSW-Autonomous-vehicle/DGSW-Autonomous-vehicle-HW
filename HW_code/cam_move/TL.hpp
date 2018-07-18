@@ -29,7 +29,8 @@ public:
 	OpenCV_TL();
 
 	void setImage(Mat img);
-	void getLightInfo(int flag);
+	
+	int getLightInfo(int flag);
 	int getPixelInfo(Point pt);
 
 

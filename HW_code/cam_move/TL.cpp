@@ -1,10 +1,10 @@
-#include "TL.h"
+#include "TL.hpp"
 
 OpenCV_TL::OpenCV_TL() {
 
 }
 
-void OpenCV_TL::getLightInfo(int flag) {
+int OpenCV_TL::getLightInfo(int flag) {
 	cvtColor(image, gray, COLOR_BGR2GRAY);
 	cvtColor(image, hsv, COLOR_BGR2HSV);
 	HoughCircles(gray, circles, HOUGH_GRADIENT, 2, 5, 100, 200, 20, 160);
@@ -39,16 +39,13 @@ void OpenCV_TL::getLightInfo(int flag) {
 			int Color = getPixelInfo(Point(TL[i][0], TL[i][1]));
 			switch (Color) {
 			case RED:
-				cout << "stop" << endl;
+				return -1;
 				break;
 			case GREEN:
-				cout << "green" << endl;
+				return 0;
 				break;
 			case BLACK:
-				cout << "black" << endl;
 				break;
-			default:
-				cout << "others" << endl;
 			}
 		}
 	}
