@@ -27,7 +27,7 @@ private:
 	int golowX = C - D;
 	int gohighX = C + D;
 	
-	OpenCV_OBS Obs;
+	OpenCV_OBS obs;
 
 	float radtodegree(float th);
 
@@ -419,6 +419,9 @@ void Liner::startLiner() {
 		else {
 			set_flag(Avgpt);
 		}
+		
+		if(obs.hasOBS(Size(10,10), OBS_RELEASE))
+			flag = -1;
 		//center;
 
 		if (modes) {
@@ -435,8 +438,6 @@ void Liner::startLiner() {
 			imshow("image", img);
 		}
 		
-		if(obs.hasOBS(Size(10,10), OBS_RELEASE))
-			flag = -1;
 		waitKey(60);
 		imshow("image", img);
 		cout << "flag = " << flag << endl;
