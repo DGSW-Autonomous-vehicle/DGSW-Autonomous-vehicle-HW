@@ -1,5 +1,4 @@
-//TL.cpp
-#include "TL.hpp"
+#include "TL.h"
 
 OpenCV_TL::OpenCV_TL() {
 
@@ -77,4 +76,8 @@ int OpenCV_TL::getPixelInfo(Point pt) {
 		return OTHERS;
 	}
 	return OTHERS;
+}
+
+void OpenCV_TL::setImage(Mat img) {
+	this->image = img;
 }

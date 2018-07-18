@@ -1,6 +1,5 @@
-//TL.hpp
-#ifndef _DEFINE_TL_H_
-#define _DEFINE_TL_H_
+#ifndef __DEFINE_TL_H__
+#define __DEFINE_TL_H__
 
 #define RED 0
 #define GREEN 1
@@ -11,6 +10,9 @@
 #define LIGHT_VERTICAL 1
 #define LIGHT_HORIZONTAL 2
 
+
+#include <opencv2/opencv.hpp> 
+#include <vector>
 #include <cmath>
 
 using namespace cv;
@@ -26,10 +28,14 @@ private:
 public:
 	OpenCV_TL();
 
+	void setImage(Mat img);
 	void getLightInfo(int flag);
 	int getPixelInfo(Point pt);
 
 
 };
 
+
+
 #endif
+
