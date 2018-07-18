@@ -1,9 +1,10 @@
-
 #include <opencv2/opencv.hpp>
 #include <iostream>
 #include <vector>
-#include "obstacle.hpp"
-#include "TL.hpp"
+
+//#include "obstacle.hpp"
+//#include "TL.hpp"
+
 
 #define M_PI 3.14159265358979323846
 
@@ -27,10 +28,10 @@ private:
 	int C = 320;
 	int golowX = C - D;
 	int gohighX = C + D;
-	
+	/*
 	OpenCV_OBS obs;
 	OpenCV_TL traffic;
-
+	*/
 	float radtodegree(float th);
 
 	void drawlines(Mat src, vector<Vec2f> lines, Rect roi);
@@ -51,7 +52,7 @@ private:
 
 	int getCenterline(Mat src);
 
-	int flag_ass(Mat m);
+	//int flag_ass(Mat m);
 
 public:
 	Mat img;
@@ -79,7 +80,6 @@ float Liner::radtodegree(float th) {
 }
 
 void Liner::drawlines(Mat src, vector<Vec2f> lines, Rect roi) {
-	//cout << "drawlines" << endl;
 	for (auto it = lines.begin(); it != lines.end(); it++) {
 		float rho = (*it)[0];
 		float th = (*it)[1];
@@ -270,7 +270,7 @@ int Liner::flag_center(int Tx) {
 		return 0;
 	}
 	else {
-		if (Tx >= golowX-10 && Tx <= gohighX+10) {
+		if (Tx >= golowX - 10 && Tx <= gohighX + 10) {
 			flag = 0;
 			return 0;
 		}
@@ -289,11 +289,9 @@ int Liner::flag_center(int Tx) {
 }
 /*
 int Liner::flag_ass(Mat m) {
-
-	rectangle(m,Rect(Point(),Point()), Scalar(0, 0, 0));
-	imshow("image", img);
-
-	return 0;
+rectangle(m,Rect(Point(),Point()), Scalar(0, 0, 0));
+imshow("image", img);
+return 0;
 }
 */
 void Liner::startLiner() {
@@ -310,7 +308,7 @@ void Liner::startLiner() {
 
 
 	while (1) {
-        int TX=0;
+		int TX = 0;
 		angle = -1;
 		Avgpt = Point(-1, -1);
 		cap >> img;
@@ -319,13 +317,13 @@ void Liner::startLiner() {
 
 		TX = getCenterline(img);
 		/*
-        if(TX != 0){
+		if(TX != 0){
 		obs.setResources(img, Rect(C - 60, 240, C  + 60, 400));
-        }
+		}
 		traffic.setImage(img);
-		
+
 		int lightflag = traffic.getLightInfo(LIGHT_VERTICAL);
-        */
+		*/
 		line_1 = getlines(img, 100, 200, Roi1, modes);
 		line_2 = getlines(img, 100, 200, Roi2, modes);
 
@@ -430,14 +428,14 @@ void Liner::startLiner() {
 		}
 		/*
 		if(obs.hasOBS(Size(10,10), OBS_RELEASE))
-			flag = -1;
-		
+		flag = -1;
+
 		if(lightflag == -1)
-			flag = -1;
+		flag = -1;
 		else
-			flag = 0;
+		flag = 0;
 		//center;
-        */
+		*/
 		if (modes) {
 			cout << "flag = " << flag << endl;
 			line(img, Point(TX, 0), Point(TX, 480), Scalar(255, 0, 255), 1);
@@ -451,7 +449,7 @@ void Liner::startLiner() {
 			rectangle(img, Roi4, Scalar(0, 0, 0));
 			imshow("image", img);
 		}
-		
+
 		waitKey(60);
 		//imshow("image", img);
 		cout << "flag = " << flag << endl;
