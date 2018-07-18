@@ -2,6 +2,7 @@
 #include <opencv2/opencv.hpp>
 #include <iostream>
 #include <vector>
+#include "obstacle.hpp"
 
 #define M_PI 3.14159265358979323846
 
@@ -25,6 +26,8 @@ private:
 	int C = 320;
 	int golowX = C - D;
 	int gohighX = C + D;
+	
+	OpenCV_OBS Obs;
 
 	float radtodegree(float th);
 
@@ -311,11 +314,13 @@ void Liner::startLiner() {
 		//img = imread(file);
 
 		int TX = getCenterline(img);
+		
+		obs.setResources(img, Rect(TX - 60, 240, TX + 60, 400));
 
 		line_1 = getlines(img, 100, 200, Roi1, modes);
 		line_2 = getlines(img, 100, 200, Roi2, modes);
 
-		if (line_1.size() != 0 && line_2.size() != 0) {//1,2�� ���?������ ����
+		if (line_1.size() != 0 && line_2.size() != 0) {//1,2ï¿½ï¿½ ï¿½ï¿½ï¿?ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 			if (modes)
 				cout << "1 and 2" << endl;
 			points = getCrossPoint(img, line_1, line_2, modes);
@@ -326,7 +331,7 @@ void Liner::startLiner() {
 			}
 		}
 		else {
-			if (line_1.size() == 0 && line_2.size() == 0) {//�پȰ���
+			if (line_1.size() == 0 && line_2.size() == 0) {//ï¿½Ù¾È°ï¿½ï¿½ï¿½
 				if (modes)
 					cout << "not 1 and 2" << endl;
 				line_3 = getlines(img, 100, 200, Roi3, modes);
@@ -360,11 +365,11 @@ void Liner::startLiner() {
 					Avgpt.x = 320;
 					Avgpt.y = 300;
 				}
-				else if ((angle > 1 && angle < 89) || (angle > 181 && angle < 269)) {//����������
+				else if ((angle > 1 && angle < 89) || (angle > 181 && angle < 269)) {//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 					Avgpt.x = 600;
 					Avgpt.y = 300;
 				}
-				else if ((angle > 91 && angle < 179) || (angle > 271 && angle < 359)) {//��������
+				else if ((angle > 91 && angle < 179) || (angle > 271 && angle < 359)) {//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 					Avgpt.x = 40;
 					Avgpt.y = 300;
 				}
@@ -373,14 +378,14 @@ void Liner::startLiner() {
 					Avgpt.y = -1;
 				}
 			}
-			else {//1,2���ϳ� ����
+			else {//1,2ï¿½ï¿½ï¿½Ï³ï¿½ ï¿½ï¿½ï¿½ï¿½
 				if (modes)
 					cout << "1 or 2" << endl;
 
-				if (line_1.size() != 0) { //1���� ����
+				if (line_1.size() != 0) { //1ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 					angle = AvgLineAngle(line_1);
 				}
-				else if (line_2.size() != 0) {//2���� ����
+				else if (line_2.size() != 0) {//2ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 					angle = AvgLineAngle(line_2);
 				}
 
@@ -392,11 +397,11 @@ void Liner::startLiner() {
 					Avgpt.x = 320;
 					Avgpt.y = 300;
 				}
-				else if ((angle > 1 && angle < 89) || (angle > 181 && angle < 269)) {//����������
+				else if ((angle > 1 && angle < 89) || (angle > 181 && angle < 269)) {//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 					Avgpt.x = 600;
 					Avgpt.y = 300;
 				}
-				else if ((angle > 91 && angle < 179) || (angle > 271 && angle < 359)) {//��������
+				else if ((angle > 91 && angle < 179) || (angle > 271 && angle < 359)) {//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 					Avgpt.x = 40;
 					Avgpt.y = 300;
 				}
@@ -429,6 +434,9 @@ void Liner::startLiner() {
 			rectangle(img, Roi4, Scalar(0, 0, 0));
 			imshow("image", img);
 		}
+		
+		if(obs.hasOBS(Size(10,10), OBS_RELEASE))
+			flag = -1;
 		waitKey(60);
 		imshow("image", img);
 		cout << "flag = " << flag << endl;
