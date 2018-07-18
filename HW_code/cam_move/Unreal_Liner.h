@@ -1,3 +1,4 @@
+
 #include <opencv2/opencv.hpp>
 #include <iostream>
 #include <vector>
@@ -11,7 +12,6 @@ class Liner {
 private:
 	string file = "image/0.jpg";
 	Mat HSV;
-	Mat img;
 	int roi_height = 380;
 	Size roisize = Size(64, 64);
 
@@ -23,8 +23,8 @@ private:
 
 	int D = 30;
 	int C = 320;
-	int golowX = C-D;
-	int gohighX = C+D;
+	int golowX = C - D;
+	int gohighX = C + D;
 
 	float radtodegree(float th);
 
@@ -46,7 +46,10 @@ private:
 
 	int getCenterline(Mat src);
 
+	int flag_ass(Mat m);
+
 public:
+	Mat img;
 	void startLiner();
 	bool modes = 0;
 	int flag = -1;
@@ -62,8 +65,8 @@ public:
 */
 
 /*
- 150 ~ 160 && 330 ~ 340
-  20 ~  30 && 200 ~ 210
+150 ~ 160 && 330 ~ 340
+20 ~  30 && 200 ~ 210
 */
 
 float Liner::radtodegree(float th) {
@@ -122,7 +125,6 @@ bool Liner::IntersectPoint(int *x, int *y, int x1, int x2, int x3, int x4, int y
 	if (t < 0 || t == 1 || s < 0 || s == 1) {
 	if(s<0)
 	cout << "t";
-
 	return false;
 	}
 	*/
@@ -201,16 +203,16 @@ float Liner::AvgLineAngle(vector<Vec2f> line) {
 
 int Liner::getCenterline(Mat src) {
 	int H = roi_height + roisize.height;
-	Rect roi_h = Rect(Point(0,H),Point(640,H+1));
+	Rect roi_h = Rect(Point(0, H), Point(640, H + 1));
 	Mat roi = src(roi_h);
 	Mat hsvroi;
-	cvtColor(roi,hsvroi,COLOR_BGR2HSV);
+	cvtColor(roi, hsvroi, COLOR_BGR2HSV);
 
 	int cnt = 0;
-	int Rx=0, Lx=0;
+	int Rx = 0, Lx = 0;
 
-	for (int i = 320; i < 640 ; i++) {
-		if (hsvroi.at<Vec3b>(0,i)[1] < 30 && hsvroi.at<Vec3b>(0,i)[2] > 190) {
+	for (int i = 320; i < 640; i++) {
+		if (hsvroi.at<Vec3b>(0, i)[1] < 30 && hsvroi.at<Vec3b>(0, i)[2] > 190) {
 			cnt++;
 		}
 		if (cnt > 5) {
@@ -229,7 +231,7 @@ int Liner::getCenterline(Mat src) {
 		}
 	}
 
-	return (Rx + Lx ) / 2;
+	return (Rx + Lx) / 2;
 }
 
 void Liner::set_flag(Point p) {
@@ -263,24 +265,32 @@ int Liner::flag_center(int Tx) {
 		return 0;
 	}
 	else {
-		if (Tx >= golowX && Tx <= gohighX) {
+		if (Tx >= golowX-10 && Tx <= gohighX+10) {
 			flag = 0;
 			return 0;
 		}
 		else
-			if (Tx < golowX) {
+			if (Tx < golowX - 10) {
 				flag = 4;
 				return 1;
 			}
 			else
-				if (Tx > gohighX) {
+				if (Tx > gohighX + 10) {
 					flag = 3;
 					return 1;
 				}
 	}
 	return 0;
 }
+/*
+int Liner::flag_ass(Mat m) {
 
+	rectangle(m,Rect(Point(),Point()), Scalar(0, 0, 0));
+	imshow("image", img);
+
+	return 0;
+}
+*/
 void Liner::startLiner() {
 	vector<Point> points;
 	vector<Vec2f> line_1;
@@ -301,17 +311,11 @@ void Liner::startLiner() {
 		//img = imread(file);
 
 		int TX = getCenterline(img);
-		if (flag_center(TX)) {
-//			cout << flag << endl;
-//			imshow("aaaaaaa",img);
-			waitKey(30);
-			continue;
-		}
 
 		line_1 = getlines(img, 100, 200, Roi1, modes);
 		line_2 = getlines(img, 100, 200, Roi2, modes);
 
-		if (line_1.size() != 0 && line_2.size() != 0) {//1,2占쏙옙 占쏙옙占?占쏙옙占쏙옙占쏙옙 占쏙옙占쏙옙
+		if (line_1.size() != 0 && line_2.size() != 0) {//1,2�� ���?������ ����
 			if (modes)
 				cout << "1 and 2" << endl;
 			points = getCrossPoint(img, line_1, line_2, modes);
@@ -322,7 +326,7 @@ void Liner::startLiner() {
 			}
 		}
 		else {
-			if (line_1.size() == 0 && line_2.size() == 0) {//占쌕안곤옙占쏙옙
+			if (line_1.size() == 0 && line_2.size() == 0) {//�پȰ���
 				if (modes)
 					cout << "not 1 and 2" << endl;
 				line_3 = getlines(img, 100, 200, Roi3, modes);
@@ -337,17 +341,17 @@ void Liner::startLiner() {
 					}
 				}
 				else if (line_3.size() != 0) {//line3 is not null
-					angle = AvgLineAngle(line_3); 
+					angle = AvgLineAngle(line_3);
 				}
 				else if (line_4.size() != 0) {//line4 is not null
 					angle = AvgLineAngle(line_4);
 				}
 				else { // all null
-					//stop
+					   //stop
 					Avgpt.x = -1;
 					Avgpt.y = -1;
 				}
-			
+
 				if ((angle > 150 && angle < 160) || (angle > 330 && angle < 340)) {
 					Avgpt.x = 320;
 					Avgpt.y = 300;
@@ -356,11 +360,11 @@ void Liner::startLiner() {
 					Avgpt.x = 320;
 					Avgpt.y = 300;
 				}
-				else if ((angle > 1 && angle < 89) || (angle > 181 && angle < 269)) {//占쏙옙占쏙옙占쏙옙占쏙옙占쏙옙
+				else if ((angle > 1 && angle < 89) || (angle > 181 && angle < 269)) {//����������
 					Avgpt.x = 600;
 					Avgpt.y = 300;
 				}
-				else if ((angle > 91 && angle < 179) || (angle > 271 && angle < 359)) {//占쏙옙占쏙옙占쏙옙占쏙옙
+				else if ((angle > 91 && angle < 179) || (angle > 271 && angle < 359)) {//��������
 					Avgpt.x = 40;
 					Avgpt.y = 300;
 				}
@@ -368,19 +372,17 @@ void Liner::startLiner() {
 					Avgpt.x = -1;
 					Avgpt.y = -1;
 				}
-//				cout << "angle = " << angle << endl;
 			}
-			else {//1,2占쏙옙占싹놂옙 占쏙옙占쏙옙
+			else {//1,2���ϳ� ����
 				if (modes)
 					cout << "1 or 2" << endl;
 
-				if (line_1.size() != 0) { //1占쏙옙占쏙옙 占쏙옙占쏙옙
+				if (line_1.size() != 0) { //1���� ����
 					angle = AvgLineAngle(line_1);
 				}
-				else if (line_2.size() != 0) {//2占쏙옙占쏙옙 占쏙옙占쏙옙
+				else if (line_2.size() != 0) {//2���� ����
 					angle = AvgLineAngle(line_2);
 				}
-				cout << "angle = " <<angle << endl;
 
 				if ((angle > 150 && angle < 160) || (angle > 330 && angle < 340)) {
 					Avgpt.x = 320;
@@ -390,11 +392,11 @@ void Liner::startLiner() {
 					Avgpt.x = 320;
 					Avgpt.y = 300;
 				}
-				else if ((angle > 1 && angle < 89) || (angle > 181 && angle < 269)) {//占쏙옙占쏙옙占쏙옙占쏙옙占쏙옙
+				else if ((angle > 1 && angle < 89) || (angle > 181 && angle < 269)) {//����������
 					Avgpt.x = 600;
 					Avgpt.y = 300;
 				}
-				else if ((angle > 91 && angle < 179) || (angle > 271 && angle < 359)) {//占쏙옙占쏙옙占쏙옙占쏙옙
+				else if ((angle > 91 && angle < 179) || (angle > 271 && angle < 359)) {//��������
 					Avgpt.x = 40;
 					Avgpt.y = 300;
 				}
@@ -404,8 +406,14 @@ void Liner::startLiner() {
 				}
 			}
 		}
-
-		set_flag(Avgpt);
+		if (flag_center(TX)) {
+			//			cout << flag << endl;
+			//			imshow("aaaaaaa",img);
+			waitKey(30);
+		}
+		else {
+			set_flag(Avgpt);
+		}
 		//center;
 
 		if (modes) {
@@ -422,13 +430,15 @@ void Liner::startLiner() {
 			imshow("image", img);
 		}
 		waitKey(60);
+		imshow("image", img);
+		cout << "flag = " << flag << endl;
 	}
 }
 /*
 int main(){
-	Liner line;
-	line.startLiner();
-	waitKey(0);
-	return 0;
+Liner line;
+line.startLiner();
+waitKey(0);
+return 0;
 }
 */
