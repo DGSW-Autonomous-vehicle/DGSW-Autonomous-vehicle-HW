@@ -66,7 +66,7 @@ int OpenCV_TL::getLightInfo(int flag) {
 			}
 		}
 	}
-	if (TL.size >= 0) {
+	if (TL.size() >= 0) {
 		for (int i = 0; i < TL.size(); i++) {
 			circle(image, Point(TL[i][0], TL[i][1]), TL[i][2], Scalar(0, 0, 255), 2);
 			int Color = getPixelInfo(Point(TL[i][0], TL[i][1]));

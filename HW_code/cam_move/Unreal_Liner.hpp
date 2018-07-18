@@ -308,20 +308,24 @@ void Liner::startLiner() {
 
 	float angle;
 
+
 	while (1) {
+        int TX=0;
 		angle = -1;
 		Avgpt = Point(-1, -1);
 		cap >> img;
 		flip(img, img, -1);
 		//img = imread(file);
 
-		int TX = getCenterline(img);
-		
-		obs.setResources(img, Rect(TX - 60, 240, TX + 60, 400));
+		TX = getCenterline(img);
+		/*
+        if(TX != 0){
+		obs.setResources(img, Rect(C - 60, 240, C  + 60, 400));
+        }
 		traffic.setImage(img);
 		
 		int lightflag = traffic.getLightInfo(LIGHT_VERTICAL);
-
+        */
 		line_1 = getlines(img, 100, 200, Roi1, modes);
 		line_2 = getlines(img, 100, 200, Roi2, modes);
 
@@ -424,7 +428,7 @@ void Liner::startLiner() {
 		else {
 			set_flag(Avgpt);
 		}
-		
+		/*
 		if(obs.hasOBS(Size(10,10), OBS_RELEASE))
 			flag = -1;
 		
@@ -433,7 +437,7 @@ void Liner::startLiner() {
 		else
 			flag = 0;
 		//center;
-
+        */
 		if (modes) {
 			cout << "flag = " << flag << endl;
 			line(img, Point(TX, 0), Point(TX, 480), Scalar(255, 0, 255), 1);
@@ -449,7 +453,7 @@ void Liner::startLiner() {
 		}
 		
 		waitKey(60);
-		imshow("image", img);
+		//imshow("image", img);
 		cout << "flag = " << flag << endl;
 	}
 }

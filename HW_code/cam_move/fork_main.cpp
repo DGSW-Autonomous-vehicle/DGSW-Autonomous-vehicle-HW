@@ -1,6 +1,7 @@
-#include "Unreal_Liner.h"
+#include "Unreal_Liner.hpp"
 #include "TL.hpp"
 #include "UKC_move_class.h"
+#include "obstacle.hpp"
 
 #include <thread>
 
@@ -49,17 +50,17 @@ void Move_UKC(){
                 break;
 
             case 1: // 오른쪽
-                Move.forward(80,30);
+                Move.forward(50,32);
                 break;
 
             case 2: // 좌파
-                Move.forward(30,80);
+                Move.forward(30,50);
                 break;
             case 3:
-                Move.forward(80,50);
+                Move.forward(47,30);
                 break;
             case 4:
-                Move.forward(50,80);
+                Move.forward(32,50);
                 break;
 
             default:
