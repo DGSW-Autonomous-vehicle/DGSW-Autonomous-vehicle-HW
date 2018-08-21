@@ -1,7 +1,7 @@
 #include <opencv2/opencv.hpp>
 #include <iostream>
 #include <vector>
-#include "obstacle.hpp"
+//#include "obstacle.hpp"
 //#include "TL.hpp"
 
 
@@ -28,7 +28,7 @@ private:
 	int golowX = C - D;
 	int gohighX = C + D;
 	
-    OpenCV_OBS obs;
+  //  OpenCV_OBS obs;
 
 	//OpenCV_TL traffic;
 
@@ -316,7 +316,7 @@ void Liner::startLiner() {
 		//img = imread(file);
 
 		TX = getCenterline(img);
- 		obs.setResources(img, Rect(C - 60, 240, C  + 60, 400));
+ 	//	obs.setResources(img, Rect(C - 60, 240, C  + 60, 400));
 //		traffic.setImage(img);
 
 //		int lightflag = traffic.getLightInfo(LIGHT_VERTICAL);
@@ -430,10 +430,10 @@ void Liner::startLiner() {
     //        flag = 0;
     //    }
 
-		if(lightflag == -1)
-            flag = -1;
-		else
-		flag = 0;
+	//	if(lightflag == -1)
+    //       flag = -1;
+	//	else
+	//	flag = 0;
 		//center;
 		if (modes) {
 			cout << "flag = " << flag << endl;

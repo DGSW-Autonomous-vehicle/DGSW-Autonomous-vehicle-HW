@@ -17,32 +17,25 @@
 //오른쪽 바퀴 PWM핀
 #define enb 25
 
-//회전 속도 PWM 값
-#define speed_spin 20
+#define DR
+#define DL
 
 using namespace std;
 
 class UKC_move{
 
     private:
-        // 속도값 변수
-        char ENA;
-        char ENB;
 
-        int speed_a = 100;
-        int speed_b = 100;
+        // 속도값 변수
+        char ENA = 120;
+        char ENB = 120;
 
     public:
-        UKC_move(){
-            ENA = speed_a;
-            ENB = speed_b;
-        }
 
         void init_wringPi();  // 초기화 함수
 
         // 움직임제어 함수 
         void forward();
-        void forward(int,int);
         void stop();
         void back();
         void left();
@@ -52,7 +45,9 @@ class UKC_move{
         void setPWM(int a,int b); 
         void setPWMA(int a); // 왼쪽 바퀴
         void setPWMB(int a); // 오른쪽 바퀴
-        void setSpeed(int a,int b); // 기본 속도 설정
+
+        void init_Infared();
+        void Infared();
 };
 
 /////////////////// 초기화 함수 /////////////////
@@ -77,8 +72,6 @@ void UKC_move::init_wringPi(){
 //////////////////// 움직임 제어함수 /////////////
 
 void UKC_move::forward(){
-    
-   UKC_move::setSpeed(speed_a,speed_b);
    softPwmWrite(ena,ENA);
    softPwmWrite(enb,ENB);
 
@@ -86,19 +79,6 @@ void UKC_move::forward(){
    digitalWrite(ain2,HIGH);
    digitalWrite(bin1,LOW);
    digitalWrite(bin2,HIGH);
-}
-
-void UKC_move::forward(int a,int b){
-   setPWM(a,b);
-   
-   softPwmWrite(ena,ENA);
-   softPwmWrite(enb,ENB);
-
-   digitalWrite(ain1,LOW);
-   digitalWrite(ain2,HIGH);
-   digitalWrite(bin1,LOW);
-   digitalWrite(bin2,HIGH);
-  
 }
 
 void UKC_move::stop(){
@@ -122,8 +102,8 @@ void UKC_move::back(){
 }
 
 void UKC_move::right(){
-    softPwmWrite(ena,speed_spin);
-    softPwmWrite(enb,speed_spin);
+    softPwmWrite(ena,45);
+    softPwmWrite(enb,45);
 
     digitalWrite(ain1,LOW);
     digitalWrite(ain2,HIGH);
@@ -132,13 +112,21 @@ void UKC_move::right(){
 }
 
 void UKC_move::left(){
-    softPwmWrite(ena,speed_spin);
-    softPwmWrite(enb,speed_spin);
+    softPwmWrite(ena,45);
+    softPwmWrite(enb,45);
 
     digitalWrite(ain1,HIGH);
     digitalWrite(ain2,LOW);
     digitalWrite(bin1,LOW);
     digitalWrite(bin2,HIGH);
+}
+
+void init_Infrared(){
+    
+}
+
+void Infrared(){
+
 }
 
 /////////////// 속도값 제어 함수 ///////////////////
@@ -154,12 +142,4 @@ void UKC_move::setPWMA(int a){
 
 void UKC_move::setPWMB(int a){
     ENB = a;
-}
-
-
-void UKC_move::setSpeed(int a,int b){
-    UKC_move::stop();
-    UKC_move::speed_a = a;
-    UKC_move::speed_b = b;
-    UKC_move::setPWM(speed_a,speed_b);
 }
